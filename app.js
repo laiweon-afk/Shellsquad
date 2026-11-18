@@ -1,4 +1,4 @@
-const DB = 'https://' + '://firebaseio.com';
+const DB = 'https://shellsquad-default-rtdb.firebaseio.com';
 const HOOK = 'https://' + '://discord.com';
 const PASS = 'shell2026';
 let tmr = null;
