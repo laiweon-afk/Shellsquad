@@ -186,3 +186,4 @@ async function loadAdm(){
 
 async function setA(id,status){
   const db=await getDB();
+}
