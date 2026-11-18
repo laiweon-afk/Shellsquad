@@ -189,3 +189,29 @@ async function setA(id,status){
   if(db.apps[id]){db.apps[id].status=status;db.apps[id].reviewer=localStorage.getItem('s_adm')||'Админ';await saveDB(db);}
   loadAdm();
 }
+// Фоновая музыка с кнопкой управления
+(function(){
+  const au = document.createElement('audio');
+  au.src = 'music.mp3';
+  au.loop = true;
+  au.volume = 0.25; // Громкость 25%, чтобы не била по ушам
+  document.body.appendChild(au);
+
+  const btn = document.createElement('button');
+  btn.textContent = '🔇 Музыка';
+  btn.style.cssText = 'position:fixed;bottom:16px;right:20px;z-index:99;background:rgba(18,24,34,.85);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:8px 14px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;backdrop-filter:blur(8px)';
+  document.body.appendChild(btn);
+
+  let playing = false;
+  function toggle(){
+    if(playing){ au.pause(); btn.textContent = '🔇 Музыка'; playing = false; }
+    else { au.play().then(()=>{ btn.textContent = '🔊 Музыка'; playing = true; }).catch(()=>{}); }
+  }
+  btn.onclick = toggle;
+
+  // Автозапуск при первом клике в любом месте сайта
+  document.addEventListener('click', function firstClick(e){
+    if(e.target !== btn && !playing){ toggle(); }
+    document.removeEventListener('click', firstClick);
+  }, {once: true});
+})();
