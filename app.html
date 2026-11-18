@@ -3,61 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shell Squad — Открытый набор на 3 ЛВЛ</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
-body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;overflow:hidden;position:relative}
-.bg{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.35),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
-.sky{position:fixed;top:0;left:0;width:100%;height:60%;pointer-events:none;z-index:1}
-.b-box{position:absolute;left:-10%;animation:fly linear infinite;opacity:.65}
-.bird{width:24px;height:12px;fill:none;stroke:rgba(203,213,225,.75);stroke-width:2;stroke-linecap:round;animation:flap .8s ease-in-out infinite alternate}
-@keyframes fly{0%{transform:translate(0,0) scale(.8)}50%{transform:translate(60vw,-25px) scale(1)}100%{transform:translate(120vw,10px) scale(.7)}}
-@keyframes flap{0%{transform:scaleY(1)}100%{transform:scaleY(-.6)}}
-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,14,20,.85),transparent)}
-.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
-.nav{display:flex;gap:10px;align-items:center}
-.btn-n{text-decoration:none;background:rgba(18,24,34,.82);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:9px 18px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.acc{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border:none}
-.dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
-.hero{position:relative;z-index:10;text-align:center;max-width:580px}
-.tag{display:inline-block;padding:6px 16px;background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:16px}
-h1{font-size:56px;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,#cbd5e1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#e2e8f0;font-size:16px;line-height:1.6;margin-bottom:34px}
-.glow{text-decoration:none;display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;padding:18px 38px;font-size:17px;font-weight:600;border-radius:16px;box-shadow:0 10px 30px rgba(139,92,246,.45)}
-.hidden{display:none!important}
-footer{position:fixed;bottom:12px;left:0;right:0;z-index:15;text-align:center;color:#64748b;font-size:12px}
-footer a{color:#94a3b8;text-decoration:none}
-</style>
-</head>
-<body>
-<div class="bg"></div>
-<div class="sky" id="sky"></div>
-<header>
-  <a href="index.html" class="logo">Shell Squad</a>
-  <div class="nav" id="gNav">
-    <a href="app.html?mode=login" class="btn-n">Войти</a>
-    <a href="app.html?mode=register" class="btn-n acc">Регистрация</a>
-  </div>
-  <div class="nav hidden" id="uNav">
-    <a href="app.html?mode=profile" class="btn-n"><span class="dot"></span> <span id="uName">Профиль</span></a>
-    <button type="button" class="btn-n" onclick="logout()">Выйти</button>
-  </div>
-</header>
-<div class="hero">
-  <div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
-  <h1>Shell Squad</h1>
-  <p id="hSub">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
-  <a href="app.html" class="glow" id="hBtn">Подать заявку на 3 лвл →</a>
-</div>
-<footer>Shell Squad © 2026 • <a href="app.html?mode=admin">Панель администрации</a></footer>
-<script src="app.js?v=2"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shell Squad — Кабинет</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
