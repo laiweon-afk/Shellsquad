@@ -63,3 +63,54 @@ footer{position:fixed;bottom:14px;left:0;right:0;z-index:15;display:flex;flex-di
 <script src="app.js?v=3"></script>
 </body>
 </html>
+<script>
+(function(){
+  if(document.getElementById('mBtn')) return;
+  const au = document.createElement('audio');
+  au.src = 'music.mp3';
+  au.loop = true;
+  au.volume = 0.25;
+  document.body.appendChild(au);
+
+  const btn = document.createElement('button');
+  btn.id = 'mBtn';
+  btn.style.cssText = 'position:fixed;bottom:16px;right:20px;z-index:99;background:rgba(18,24,34,.85);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:8px 14px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;backdrop-filter:blur(8px)';
+  document.body.appendChild(btn);
+
+  const savedTime = parseFloat(sessionStorage.getItem('s_music_time') || '0');
+  if(savedTime > 0) au.currentTime = savedTime;
+  const muted = sessionStorage.getItem('s_music_muted') === '1';
+
+  let playing = false;
+  function updateBtn(){ btn.textContent = playing ? '🔊 Музыка' : '🔇 Музыка'; }
+  updateBtn();
+
+  function startPlay(){
+    if(muted) return;
+    au.play().then(()=>{ playing = true; updateBtn(); }).catch(()=>{});
+  }
+
+  setInterval(()=>{
+    if(playing && !au.paused) sessionStorage.setItem('s_music_time', au.currentTime);
+  }, 500);
+
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    if(playing){
+      au.pause(); playing = false;
+      sessionStorage.setItem('s_music_muted', '1');
+    }else{
+      sessionStorage.removeItem('s_music_muted');
+      au.play().then(()=>{ playing = true; updateBtn(); }).catch(()=>{});
+    }
+    updateBtn();
+  };
+
+  startPlay();
+  ['click', 'keydown', 'touchstart'].forEach(ev=>{
+    document.addEventListener(ev, ()=>{ if(!playing && sessionStorage.getItem('s_music_muted') !== '1') startPlay(); }, {once: true});
+  });
+})();
+</script>
+</body>
+</html>
