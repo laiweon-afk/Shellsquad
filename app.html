@@ -3,110 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shell Squad — Открытый набор на 3 ЛВЛ</title>
+<title>Shell Squad — Кабинет</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
-body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;overflow:hidden;position:relative}
-.bg-layer{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.35),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
-.sky-birds{position:fixed;top:0;left:0;width:100%;height:60%;pointer-events:none;z-index:1}
-.bird-box{position:absolute;left:-10%;animation:fly linear infinite;opacity:.65}
-.bird{width:24px;height:12px;fill:none;stroke:rgba(203,213,225,.75);stroke-width:2;stroke-linecap:round;animation:flap .8s ease-in-out infinite alternate}
-@keyframes fly{0%{transform:translate(0,0) scale(.8)}50%{transform:translate(60vw,-25px) scale(1)}100%{transform:translate(120vw,10px) scale(.7)}}
-@keyframes flap{0%{transform:scaleY(1)}100%{transform:scaleY(-.6)}}
-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,14,20,.85),transparent)}
+body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 20px 60px;position:relative}
+.bg{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.45),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
+header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,14,20,.85);backdrop-filter:blur(8px)}
 .logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:10px;align-items:center}
-.nav-btn{text-decoration:none;background:rgba(18,24,34,.82);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:9px 18px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s}
-.nav-btn:hover{background:rgba(139,92,246,.35)}
-.nav-btn.accent{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border:none}
+.nav{display:flex;gap:10px;align-items:center}
+.btn-s{background:rgba(18,24,34,.9);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
-.hero-box{position:relative;z-index:10;text-align:center;max-width:580px}
-.tag{display:inline-block;padding:6px 16px;background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:16px}
-h1{font-size:56px;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,#cbd5e1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#e2e8f0;font-size:16px;line-height:1.6;margin-bottom:34px}
-.btn-glow{text-decoration:none;display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;padding:18px 38px;font-size:17px;font-weight:600;border-radius:16px;box-shadow:0 10px 30px rgba(139,92,246,.45);transition:.2s}
-.btn-glow:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 15px 40px rgba(139,92,246,.7)}
+.card{position:relative;z-index:10;background:rgba(18,24,34,.88);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:32px;width:100%;max-width:500px;box-shadow:0 25px 50px -12px rgba(0,0,0,.85)}
+.wide{max-width:720px}
+h2{font-size:22px;margin-bottom:6px}
+.sub{color:#94a3b8;font-size:13px;margin-bottom:18px}
+.grp{margin-bottom:14px}
+label{display:block;font-size:13px;color:#cbd5e1;margin-bottom:6px}
+input,textarea{width:100%;background:rgba(10,15,22,.9);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:14px}
+input:disabled{opacity:.55;cursor:not-allowed}
+textarea{resize:vertical;min-height:70px}
+.btn{width:100%;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+.link{margin-top:14px;text-align:center;font-size:13px;color:#94a3b8}
+.link span{color:#a78bfa;cursor:pointer;text-decoration:underline}
+.st-box{padding:18px;border-radius:16px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.12);text-align:center;margin-bottom:18px}
+.badge{display:inline-block;padding:6px 14px;border-radius:10px;font-weight:700;font-size:13px;margin-bottom:8px}
+.st-wait{background:rgba(234,179,8,.15);color:#facc15}.st-review{background:rgba(59,130,246,.15);color:#60a5fa}.st-accept{background:rgba(16,185,129,.15);color:#34d399}.st-reject{background:rgba(239,68,68,.15);color:#f87171}
+.item{background:rgba(10,15,22,.92);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;margin-bottom:12px}
+.item p{font-size:13px;color:#cbd5e1;margin-bottom:6px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.abtn{border:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#fff}
 .hidden{display:none!important}
-footer{position:fixed;bottom:12px;left:0;right:0;z-index:15;text-align:center;color:#64748b;font-size:12px}
-footer a{color:#94a3b8;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="bg-layer"></div>
-<div class="sky-birds" id="skyBirds"></div>
+<div class="bg"></div>
 <header>
-  <a href="index.html" class="logo">Shell Squad</a>
-  <div class="nav-links" id="gNav">
-    <a href="app.html?mode=login" class="nav-btn">Войти</a>
-    <a href="app.html?mode=register" class="nav-btn accent">Регистрация</a>
-  </div>
-  <div class="nav-links hidden" id="uNav">
-    <a href="app.html?mode=profile" class="nav-btn"><span class="dot"></span> <span id="uName">Профиль</span></a>
-    <button type="button" class="nav-btn" onclick="logoutHome()">Выйти</button>
+  <a href="index.html" class="logo">← На главную</a>
+  <div class="nav hidden" id="navU">
+    <button type="button" class="btn-s" onclick="show('b-prof')"><span class="dot"></span> <span id="uNick">Профиль</span></button>
+    <button type="button" class="btn-s" onclick="logout()">Выйти</button>
   </div>
 </header>
-<div class="hero-box">
-  <div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
-  <h1>Shell Squad</h1>
-  <p id="hSub">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
-  <a href="app.html" class="btn-glow" id="hBtn">Подать заявку на 3 лвл →</a>
+
+<div class="card" id="b-reg">
+  <h2>Регистрация аккаунта</h2>
+  <p class="sub">Создайте профиль — логин закрепляется навсегда.</p>
+  <form onsubmit="reg(event)">
+    <div class="grp"><label>Придумайте логин</label><input type="text" id="r-l" required></div>
+    <div class="grp"><label>Придумайте пароль</label><input type="password" id="r-p" required></div>
+    <button type="submit" class="btn" id="r-btn">Зарегистрироваться и продолжить</button>
+  </form>
+  <div class="link">Уже есть аккаунт? <span onclick="show('b-log')">Войти</span></div>
 </div>
-<footer>Shell Squad © 2026 • <a href="app.html?mode=admin">Панель администрации</a></footer>
-<script>
-const DB = 'https://' + '://firebaseio.com';
-for(let i=0;i<6;i++){const b=document.createElement('div');b.className='bird-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';document.getElementById('skyBirds').appendChild(b)}
 
-function renderHomeUser(){
-  const nick=localStorage.getItem('s_nick');
-  const app=localStorage.getItem('s_app');
-  if(nick){
-    document.getElementById('gNav').classList.add('hidden');
-    document.getElementById('uNav').classList.remove('hidden');
-    document.getElementById('uName').textContent=nick;
-    document.getElementById('hSub').innerHTML='Добро пожаловать, <strong style="color:#fff">'+nick+'</strong>! Ваш аккаунт синхронизирован.';
-    document.getElementById('hBtn').textContent=app?'Статус моей заявки →':'Подать заявку на 3 лвл →';
-  }else{
-    document.getElementById('gNav').classList.remove('hidden');
-    document.getElementById('uNav').classList.add('hidden');
-    document.getElementById('hSub').textContent='Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.';
-    document.getElementById('hBtn').textContent='Подать заявку на 3 лвл →';
-  }
-}
+<div class="card hidden" id="b-log">
+  <h2>Вход в аккаунт</h2>
+  <p class="sub">Войдите, чтобы открыть профиль и статус заявки.</p>
+  <form onsubmit="log(event)">
+    <div class="grp"><label>Ваш логин</label><input type="text" id="l-l" required></div>
+    <div class="grp"><label>Ваш пароль</label><input type="password" id="l-p" required></div>
+    <button type="submit" class="btn" id="l-btn">Войти</button>
+  </form>
+  <div class="link">Нет аккаунта? <span onclick="show('b-reg')">Регистрация</span></div>
+</div>
 
-async function syncHome(){
-  renderHomeUser();
-  const k=localStorage.getItem('s_key');
-  if(!k)return;
-  try{
-    const r=await fetch(DB+'/users/'+k+'.json');
-    if(!r.ok)return;
-    const u=await r.json();
-    if(u){
-      localStorage.setItem('s_nick',u.displayNick||u.login);
-      if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
-      renderHomeUser();
-    }else{logoutHome()}
-  }catch(e){}
-}
+<div class="card hidden" id="b-prof">
+  <h2>Ваш профиль</h2>
+  <p class="sub">Статус вашей заявки и настройки аккаунта.</p>
+  <div class="st-box">
+    <div id="p-badge" class="badge st-wait">📝 Заявка еще не подана</div>
+    <p id="p-st-txt" style="font-size:14px;line-height:1.4">Вы можете заполнить анкету на 3 лвл.</p>
+    <p id="p-st-rev" style="margin-top:6px;font-size:12px;color:#94a3b8"></p>
+  </div>
+  <form onsubmit="saveP(event)">
+    <div class="grp"><label>Ваш логин (нельзя изменить)</label><input type="text" id="p-log-inp" disabled></div>
+    <div class="grp"><label>Отображаемый никнейм</label><input type="text" id="p-nick" required></div>
+    <div class="grp"><label>Ваш основной Discord</label><input type="text" id="p-ds"></div>
+    <button type="submit" class="btn">Сохранить настройки</button>
+  </form>
+  <div class="link"><span onclick="backP()">← Перейти к заявке / статусу</span></div>
+</div>
 
-function logoutHome(){localStorage.clear();renderHomeUser()}
-window.addEventListener('DOMContentLoaded',syncHome);
-</script>
+<div class="card hidden" id="b-app">
+  <h2>Заявка на 3 лвл</h2>
+  <p class="sub">Аккаунт <strong id="a-user" style="color:#34d399"></strong> активен.</p>
+  <form onsubmit="sendApp(event)">
+    <div class="grp"><label>Ваше имя</label><input type="text" id="f-name" required></div>
+    <div class="grp"><label>Ваш возраст</label><input type="number" id="f-age" min="10" max="99" required></div>
+    <div class="grp"><label>Почему именно вы?</label><textarea id="f-why" required></textarea></div>
+    <div class="grp"><label>Сколько в софтах?</label><input type="text" id="f-exp" required></div>
+    <div class="grp"><label>С каким читом играете?</label><input type="text" id="f-soft" required></div>
+    <div class="grp"><label>Ваш Discord</label><input type="text" id="f-ds" required></div>
+    <button type="submit" class="btn" id="s-btn">Отправить заявку</button>
+  </form>
+</div>
+
+<div class="card hidden" id="b-st">
+  <h2>Статус вашей заявки</h2>
+  <p class="sub">Игрок: <strong id="st-user" style="color:#fff"></strong></p>
+  <div class="st-box">
+    <div id="st-badge" class="badge st-wait">⏳ Ожидает рассмотрения</div>
+    <p id="st-txt" style="font-size:15px;line-height:1.5">Ваша анкета отправлена. Ожидайте.</p>
+    <p id="st-rev" style="margin-top:10px;font-size:13px;color:#94a3b8"></p>
+  </div>
+</div>
+
+<div class="card wide hidden" id="b-adm">
+  <h2>Панель проверяющего</h2>
+  <form onsubmit="admLog(event)" id="adm-f">
+    <div class="grp"><label>Ваш ник проверяющего</label><input type="text" id="a-nick" required></div>
+    <div class="grp"><label>Пароль админ-панели</label><input type="password" id="a-pass" required></div>
+    <button type="submit" class="btn">Войти в панель</button>
+  </form>
+  <div id="adm-box" class="hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <p class="sub" style="margin:0">Админ: <strong id="a-cur" style="color:#c4b5fd"></strong></p>
+      <button type="button" class="abtn" style="background:#334155" onclick="loadAdm()">🔄 Обновить</button>
+    </div>
+    <div id="a-list">Загрузка...</div>
+  </div>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
-<script>
 const DB = 'https://' + '://firebaseio.com';
 const HOOK = 'https://' + '://discord.com';
 const PASS = 'shell2026';
 let tmr = null;
 
 function keyOf(s){return Array.from(s.trim().toLowerCase()).map(c=>c.charCodeAt(0).toString(16)).join('')}
-function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));const el=document.getElementById(id);if(el)el.classList.remove('hidden')}
 function backP(){show(localStorage.getItem('s_app')?'b-st':'b-app')}
 
-async function init(){
-  const m=new URLSearchParams(location.search).get('mode');
-  if(m==='admin'){show('b-adm');return}
+// Птицы для главной страницы
+const sky=document.getElementById('sky');
+if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
+
+async function startAll(){
   const k=localStorage.getItem('s_key');
   if(k){
     try{
@@ -118,24 +151,37 @@ async function init(){
           localStorage.setItem('s_login',u.login);
           localStorage.setItem('s_ds',u.discord||'');
           if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
-          ui();
-          if(u.appId)watch(u.appId);
-          if(m==='profile'){show('b-prof');return}
-          show(u.appId?'b-st':'b-app');
-          return;
-        }
+        }else{localStorage.clear()}
       }
     }catch(e){}
-    if(localStorage.getItem('s_nick')){
-      ui();
-      const app=localStorage.getItem('s_app');
-      if(app)watch(app);
-      if(m==='profile'){show('b-prof');return}
-      show(app?'b-st':'b-app');
-      return;
-    }
   }
-  show(m==='login'?'b-log':'b-reg');
+
+  // Если открыта главная страница (index.html)
+  if(document.getElementById('hBtn')){
+    const n=localStorage.getItem('s_nick'),app=localStorage.getItem('s_app');
+    if(n){
+      document.getElementById('gNav').classList.add('hidden');
+      document.getElementById('uNav').classList.remove('hidden');
+      document.getElementById('uName').textContent=n;
+      document.getElementById('hSub').innerHTML='Добро пожаловать, <strong style="color:#fff">'+n+'</strong>! Аккаунт синхронизирован.';
+      document.getElementById('hBtn').textContent=app?'Статус моей заявки →':'Подать заявку на 3 лвл →';
+    }
+    return;
+  }
+
+  // Если открыт кабинет (app.html)
+  const m=new URLSearchParams(location.search).get('mode');
+  if(m==='admin'){show('b-adm');return}
+  const n=localStorage.getItem('s_nick');
+  if(n){
+    ui();
+    const app=localStorage.getItem('s_app');
+    if(app)watch(app);
+    if(m==='profile'){show('b-prof');return}
+    show(app?'b-st':'b-app');
+  }else{
+    show(m==='login'?'b-log':'b-reg');
+  }
 }
 
 function ui(){
@@ -150,26 +196,22 @@ function ui(){
   if(d&&!document.getElementById('f-ds').value)document.getElementById('f-ds').value=d;
 }
 
-window.addEventListener('DOMContentLoaded',init);
-function logout(){localStorage.clear();if(tmr)clearInterval(tmr);window.location.href='index.html'}
+window.addEventListener('DOMContentLoaded',startAll);
+function logout(){localStorage.clear();if(tmr)clearInterval(tmr);location.href='index.html'}
 
 async function reg(e){
   e.preventDefault();
   const l=document.getElementById('r-l').value.trim(),p=document.getElementById('r-p').value,k=keyOf(l),b=document.getElementById('r-btn');
-  b.disabled=true;b.textContent='Проверка логина...';
+  b.disabled=true;b.textContent='Проверка...';
   try{
     const c=await fetch(DB+'/users/'+k+'.json');
-    if(!c.ok)throw new Error('Ошибка базы');
-    const ex=await c.json();
-    if(ex){alert('Этот логин уже занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
+    if(!c.ok)throw new Error();
+    if(await c.json()){alert('Этот логин уже занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
     const w=await fetch(DB+'/users/'+k+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:l,displayNick:l,discord:'',pass:p,appId:''})});
-    if(!w.ok)throw new Error('Ошибка записи');
+    if(!w.ok)throw new Error();
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',l);localStorage.setItem('s_login',l);localStorage.removeItem('s_app');
-    window.location.href='index.html';
-  }catch(err){
-    alert('Ошибка подключения к базе Firebase! Проверьте интернет.');
-    b.disabled=false;b.textContent='Зарегистрироваться и продолжить';
-  }
+    location.href='index.html';
+  }catch(err){alert('Ошибка связи с базой Firebase!');b.disabled=false;b.textContent='Зарегистрироваться и продолжить'}
 }
 
 async function log(e){
@@ -178,12 +220,12 @@ async function log(e){
   b.disabled=true;b.textContent='Вход...';
   try{
     const r=await fetch(DB+'/users/'+k+'.json');
-    if(!r.ok)throw new Error('Ошибка базы');
+    if(!r.ok)throw new Error();
     const u=await r.json();
     if(!u||u.pass!==p){alert('Неверный логин или пароль!');b.disabled=false;b.textContent='Войти';return}
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',u.displayNick||u.login);localStorage.setItem('s_login',u.login);localStorage.setItem('s_ds',u.discord||'');
     if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
-    window.location.href='index.html';
+    location.href='index.html';
   }catch(err){alert('Ошибка сети');b.disabled=false;b.textContent='Войти'}
 }
 
@@ -201,16 +243,12 @@ async function sendApp(e){
   const app={login:u+' ('+l+')',userKey:k,name:document.getElementById('f-name').value.trim(),age:document.getElementById('f-age').value.trim(),why:document.getElementById('f-why').value.trim(),exp:document.getElementById('f-exp').value.trim(),soft:document.getElementById('f-soft').value.trim(),discord:document.getElementById('f-ds').value.trim(),status:'wait',reviewer:''};
   try{
     const r=await fetch(DB+'/applications.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(app)});
-    if(!r.ok)throw new Error('Ошибка отправки');
     const res=await r.json(),id=res.name;
     localStorage.setItem('s_app',id);
     await fetch(DB+'/users/'+k+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({appId:id})});
     fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'Shell Squad',embeds:[{title:'🌿 Новая заявка на 3 ЛВЛ!',description:'[Открыть панель проверки]('+location.origin+location.pathname+'?mode=admin)',color:9055202,fields:[{name:'Игрок',value:app.login,inline:true},{name:'Имя/Возраст',value:app.name+' ('+app.age+')',inline:true},{name:'Discord',value:app.discord,inline:true},{name:'Опыт',value:app.exp,inline:true},{name:'Чит',value:app.soft,inline:true},{name:'Почему он',value:app.why}]}]})}).catch(()=>{});
-    window.location.href='index.html';
-  }catch(err){
-    alert('Ошибка отправки! Проверьте интернет.');
-    b.disabled=false;b.textContent='Отправить заявку';
-  }
+    location.href='index.html';
+  }catch(err){alert('Ошибка отправки');b.disabled=false;b.textContent='Отправить заявку'}
 }
 
 function watch(id){once(id);if(tmr)clearInterval(tmr);tmr=setInterval(()=>once(id),4000)}
@@ -221,7 +259,6 @@ async function once(id){
     const bTxt=d.status==='review'?'👀 Взято на рассмотрение':d.status==='accept'?'✅ Вы взяты!':d.status==='reject'?'❌ Вы отклонены':'⏳ Ожидает рассмотрения';
     const mTxt=d.status==='review'?'Администратор проверяет вашу анкету.':d.status==='accept'?'Поздравляем! С вами свяжутся в ДС, ждите.':d.status==='reject'?'Ваша заявка отклонена. С вами свяжутся в ДС при необходимости, ждите.':'Ваша анкета отправлена. Ожидайте.';
     const rTxt=d.reviewer?(d.status==='review'?'Взял: <b>'+d.reviewer+'</b>':'Рассмотрел: <b>'+d.reviewer+'</b>'):'';
-
     ['st-badge','p-badge'].forEach(el=>{const x=document.getElementById(el);if(x){x.className='badge '+cls;x.textContent=bTxt}});
     ['st-txt','p-st-txt'].forEach(el=>{const x=document.getElementById(el);if(x)x.textContent=mTxt});
     ['st-rev','p-st-rev'].forEach(el=>{const x=document.getElementById(el);if(x)x.innerHTML=rTxt});
@@ -251,9 +288,3 @@ async function loadAdm(){
 }
 
 async function setA(id,status){
-  await fetch(DB+'/applications/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,reviewer:localStorage.getItem('s_adm')||'Админ'})});
-  loadAdm();
-}
-</script>
-</body>
-</html>
