@@ -173,45 +173,13 @@ function admLog(e){
 async function loadAdm(){
   const l=document.getElementById('a-list');l.innerHTML='Загрузка...';
   const db=await getDB(),d=db.apps;
-  if(!d||!Object.keys(d).length){l.innerHTML='Заявок нет.';return}
+  if(!d){l.innerHTML='Новых заявок нет.';return}
+  const active=Object.entries(d).filter(([id,a])=>a.status!=='reject').reverse();
+  if(!active.length){l.innerHTML='Новых заявок нет.';return}
   l.innerHTML='';
-  for(const[id,a]of Object.entries(d).reverse()){
+  for(const[id,a]of active){
     let st='⏳ Ожидает';
     if(a.status==='review')st='👀 На рассмотрении ('+a.reviewer+')';
     if(a.status==='accept')st='✅ Взят ('+a.reviewer+')';
-    if(a.status==='reject')st='❌ Отклонен ('+a.reviewer+')';
     l.innerHTML+='<div class="item"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><strong>'+a.login+' ('+a.name+', '+a.age+')</strong><span style="color:#c4b5fd">'+st+'</span></div><p>Discord: '+a.discord+' | Опыт: '+a.exp+' | Чит: '+a.soft+'</p><p>'+a.why+'</p><div class="acts"><button class="abtn" style="background:#3b82f6" onclick="setA(\''+id+'\',\'review\')">👀 Взять на рассмотрение</button><button class="abtn" style="background:#10b981" onclick="setA(\''+id+'\',\'accept\')">✅ Взять</button><button class="abtn" style="background:#ef4444" onclick="setA(\''+id+'\',\'reject\')">❌ Отклонить</button></div></div>';
   }
-}
-
-async function setA(id,status){
-   const db=await getDB();
-  if(db.apps[id]){db.apps[id].status=status;db.apps[id].reviewer=localStorage.getItem('s_adm')||'Админ';await saveDB(db);}
-  loadAdm();
-}
-// Фоновая музыка с кнопкой управления
-(function(){
-  const au = document.createElement('audio');
-  au.src = 'music.mp3';
-  au.loop = true;
-  au.volume = 0.25; // Громкость 25%, чтобы не била по ушам
-  document.body.appendChild(au);
-
-  const btn = document.createElement('button');
-  btn.textContent = '🔇 Музыка';
-  btn.style.cssText = 'position:fixed;bottom:16px;right:20px;z-index:99;background:rgba(18,24,34,.85);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:8px 14px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;backdrop-filter:blur(8px)';
-  document.body.appendChild(btn);
-
-  let playing = false;
-  function toggle(){
-    if(playing){ au.pause(); btn.textContent = '🔇 Музыка'; playing = false; }
-    else { au.play().then(()=>{ btn.textContent = '🔊 Музыка'; playing = true; }).catch(()=>{}); }
-  }
-  btn.onclick = toggle;
-
-  // Автозапуск при первом клике в любом месте сайта
-  document.addEventListener('click', function firstClick(e){
-    if(e.target !== btn && !playing){ toggle(); }
-    document.removeEventListener('click', firstClick);
-  }, {once: true});
-})();
