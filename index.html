@@ -11,69 +11,137 @@
             padding: 0;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
+
         body {
             min-height: 100vh;
             color: #f1f5f9;
             background-color: #0d131a;
-            /* Сначала ищет ваш локальный файл bg.jpg, если его нет — ставит атмосферный туманный фон */
-            background-image: 
-                linear-gradient(to bottom, rgba(13, 19, 26, 0.45), rgba(10, 14, 20, 0.88)), 
-                url('bg.jpg'),
-                url('https://unsplash.com');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
-        .particles {
+
+        /* Живой фон с параллаксом */
+        .bg-layer {
+            position: fixed;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            background-image: 
+                linear-gradient(to bottom, rgba(13, 19, 26, 0.35), rgba(10, 14, 20, 0.85)), 
+                url('bg.jpg'),
+                url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            pointer-events: none;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Анимация парящих птиц на горизонте */
+        .sky-birds {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 60%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .bird-container {
+            position: absolute;
+            left: -10%;
+            animation: flyAcross linear infinite;
+            opacity: 0.65;
+        }
+
+        .bird {
+            width: 24px;
+            height: 12px;
+            fill: none;
+            stroke: rgba(203, 213, 225, 0.7);
+            stroke-width: 2;
+            stroke-linecap: round;
+            animation: flap 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes flyAcross {
+            0% { transform: translateX(0) translateY(0) scale(0.8); }
+            50% { transform: translateX(60vw) translateY(-25px) scale(1); }
+            100% { transform: translateX(120vw) translateY(10px) scale(0.7); }
+        }
+
+        @keyframes flap {
+            0% { transform: scaleY(1); }
+            100% { transform: scaleY(-0.6); }
+        }
+
+        /* Светлячки / пыльца */
+        .fireflies {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 0;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: floatBg 25s linear infinite;
-            opacity: 0.45;
+            z-index: 2;
         }
-        @keyframes floatBg {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-50px); }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #c4b5fd;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(167, 139, 250, 0.8);
+            animation: floatFirefly ease-in-out infinite;
+            opacity: 0;
         }
-        .glass-card {
+
+        @keyframes floatFirefly {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { transform: translateY(-60px) translateX(25px); opacity: 0.85; }
+        }
+
+        /* Контент строго поверх всех эффектов */
+        .main-wrapper {
             position: relative;
-            z-index: 1;
-            background: rgba(18, 24, 34, 0.72);
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: rgba(18, 24, 34, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 24px;
             padding: 36px;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
-            animation: fadeIn 0.4s ease-out;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.35s ease-out;
         }
+
         .admin-wide { max-width: 720px; }
+
         .hero-box {
-            position: relative;
-            z-index: 1;
             text-align: center;
             max-width: 600px;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.45s ease-out;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .tag {
             display: inline-block;
             padding: 6px 14px;
-            background: rgba(167, 139, 250, 0.15);
-            border: 1px solid rgba(167, 139, 250, 0.35);
+            background: rgba(167, 139, 250, 0.18);
+            border: 1px solid rgba(167, 139, 250, 0.4);
             color: #c4b5fd;
             border-radius: 99px;
             font-size: 12px;
@@ -81,56 +149,80 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 16px;
+            cursor: pointer;
+            transition: 0.2s;
         }
+
+        .tag:hover {
+            background: rgba(167, 139, 250, 0.3);
+        }
+
         h1.main-title {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 14px;
             background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            user-select: none;
         }
+
         p.hero-desc {
-            color: #cbd5e1;
+            color: #e2e8f0;
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 32px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
         }
+
         .btn-glow {
+            position: relative;
+            z-index: 20;
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: #fff;
             border: none;
-            padding: 18px 36px;
+            padding: 18px 38px;
             font-size: 17px;
             font-weight: 600;
             border-radius: 16px;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-            transition: all 0.25s ease;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.45);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
         .btn-glow:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.6);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.7);
         }
+
+        .btn-glow:active {
+            transform: scale(0.98);
+        }
+
         h2 { font-size: 24px; margin-bottom: 8px; font-weight: 700; }
         .sub { color: #94a3b8; font-size: 14px; margin-bottom: 22px; }
         .input-group { margin-bottom: 15px; text-align: left; }
         label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; font-weight: 500; }
+        
         input, textarea {
             width: 100%;
-            background: rgba(10, 15, 22, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(10, 15, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             padding: 12px 14px;
             color: #fff;
             font-size: 14px;
         }
+
         input:focus, textarea:focus {
             outline: none;
             border-color: #8b5cf6;
         }
+
         textarea { resize: vertical; min-height: 75px; }
+
         .btn-submit {
             width: 100%;
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
@@ -142,18 +234,20 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 8px;
+            transition: 0.2s;
         }
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+
+        .btn-submit:hover { opacity: 0.92; }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
         .status-box {
             padding: 22px;
             border-radius: 16px;
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             text-align: center;
         }
+
         .status-badge {
             display: inline-block;
             padding: 6px 14px;
@@ -162,21 +256,24 @@
             font-size: 14px;
             margin-bottom: 12px;
         }
+
         .st-wait { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
         .st-review { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
         .st-accept { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .st-reject { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .app-item {
-            background: rgba(10, 15, 22, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 15, 22, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 14px;
             padding: 18px;
             margin-bottom: 14px;
             text-align: left;
         }
+
         .app-item p { font-size: 13px; color: #cbd5e1; margin-bottom: 6px; line-height: 1.4; }
         .app-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        
         .act-btn {
             border: none;
             padding: 8px 14px;
@@ -186,77 +283,34 @@
             cursor: pointer;
             color: #fff;
         }
+
         .btn-take { background: #3b82f6; }
         .btn-yes { background: #10b981; }
         .btn-no { background: #ef4444; }
         .hidden { display: none !important; }
+
+        .footer-admin {
+            position: fixed;
+            bottom: 12px;
+            right: 16px;
+            z-index: 15;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer-admin:hover { color: rgba(255, 255, 255, 0.8); }
     </style>
 </head>
 <body>
 
-<div class="particles"></div>
+<div class="bg-layer" id="bgLayer"></div>
+<div class="sky-birds" id="skyBirds"></div>
+<div class="fireflies" id="fireflies"></div>
 
-<!-- ЭКРАН 1: ГЛАВНАЯ -->
-<div id="screen-home" class="hero-box">
-    <div class="tag">Shell Squad • Закрытый набор</div>
-    <h1 class="main-title">Shell Squad</h1>
-    <p class="hero-desc">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному уровню.</p>
-    <button class="btn-glow" onclick="startFlow()">Подать заявку на 3 лвл →</button>
-</div>
-
-<!-- ЭКРАН 2: РЕГИСТРАЦИЯ -->
-<div id="screen-register" class="glass-card hidden">
-    <h2>Регистрация аккаунта</h2>
-    <p class="sub">Создайте профиль, чтобы отслеживать статус вашей заявки.</p>
-    <form onsubmit="handleRegister(event)">
-        <div class="input-group">
-            <label>Придумайте логин (Никнейм)</label>
-            <input type="text" id="reg-login" placeholder="Например: Shadow" required>
-        </div>
-        <div class="input-group">
-            <label>Придумайте пароль</label>
-            <input type="password" id="reg-pass" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="btn-submit">Зарегистрироваться и перейти к анкете</button>
-    </form>
-</div>
-
-<!-- ЭКРАН 3: АНКЕТА -->
-<div id="screen-form" class="glass-card hidden">
-    <h2>Анкета на 3 лвл</h2>
-    <p class="sub">Заполняйте честно. Заявка сразу отправится проверяющим.</p>
-    <form onsubmit="handleApplication(event)">
-        <div class="input-group">
-            <label>Ваше имя</label>
-            <input type="text" id="f-name" placeholder="Как к вам обращаться?" required>
-        </div>
-        <div class="input-group">
-            <label>Ваш возраст</label>
-            <input type="number" id="f-age" placeholder="Например: 17" min="10" max="99" required>
-        </div>
-        <div class="input-group">
-            <label>Почему именно вы?</label>
-            <textarea id="f-why" placeholder="Чем вы выделяетесь?" required></textarea>
-        </div>
-        <div class="input-group">
-            <label>Сколько в софтах?</label>
-            <input type="text" id="f-exp" placeholder="Например: 2 года" required>
-        </div>
-        <div class="input-group">
-            <label>С каким читом играете?</label>
-            <input type="text" id="f-soft" placeholder="Название софта" required>
-        </div>
-        <div class="input-group">
-            <label>Ваш Discord</label>
-            <input type="text" id="f-discord" placeholder="Например: username" required>
-        </div>
-        <button type="submit" class="btn-submit" id="send-btn">Отправить заявку</button>
-    </form>
-</div>
-
-<!-- ЭКРАН 4: СТАТУС ДЛЯ ИГРОКА -->
-<div id="screen-status" class="glass-card hidden">
-    <h2>Статус вашей заявки</h2>
-    <p class="sub">Аккаунт: <strong id="user-display" style="color:#fff;"></strong> (обновляется автоматически)</p>
-    <div class="status-box">
-        <div id="status-badge" class="status-badge st-wait">⏳ Ожидает рассмотрения</div>
+<div class="main-wrapper">
+    <!-- ЭКРАН 1: ГЛАВНАЯ -->
+    <div id="screen-home" class="hero-box">
+        <div class="tag" onclick="startFlow()">Shell Squad • Закрытый набор</div>
+        <h1 class="main-title" onclick="startFlow()">Shell Squad</h1>
