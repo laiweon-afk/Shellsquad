@@ -24,14 +24,15 @@
         @keyframes floatF { 0%, 100% { transform: translate(0, 0); opacity: 0; } 50% { transform: translate(25px, -60px); opacity: 0.85; } }
 
         /* Шапка сайта */
-        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(10,14,20,0.75), transparent); backdrop-filter: blur(4px); }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(10,14,20,0.8), transparent); backdrop-filter: blur(6px); }
         .logo { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: 10px; align-items: center; }
-        .nav-btn { text-decoration: none; background: rgba(18, 24, 34, 0.78); border: 1px solid rgba(255, 255, 255, 0.18); color: #f1f5f9; padding: 9px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-block; }
+        .nav-btn { text-decoration: none; background: rgba(18, 24, 34, 0.82); border: 1px solid rgba(255, 255, 255, 0.18); color: #f1f5f9; padding: 9px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .nav-btn:hover { background: rgba(139, 92, 246, 0.35); border-color: rgba(167, 139, 250, 0.6); }
         .nav-btn.accent { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none; }
+        .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; display: inline-block; }
 
-        /* Первый экран (Hero) */
+        /* Первый экран */
         .hero-section { position: relative; z-index: 10; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
         .tag { display: inline-block; padding: 6px 16px; background: rgba(16, 185, 129, 0.16); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; border-radius: 99px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
         h1.main-title { font-size: 56px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -39,19 +40,19 @@
         .btn-glow { text-decoration: none; display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 18px 38px; font-size: 17px; font-weight: 600; border-radius: 16px; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.45); transition: 0.2s; }
         .btn-glow:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 40px rgba(139, 92, 246, 0.7); }
 
-        /* Нижняя секция с формами */
+        /* Нижняя секция */
         .content-section { position: relative; z-index: 10; max-width: 960px; margin: 0 auto; padding: 60px 20px 100px; display: flex; flex-direction: column; gap: 36px; align-items: center; }
         .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
         @media (max-width: 768px) { .grid-two { grid-template-columns: 1fr; } }
 
-        .glass-card { background: rgba(18, 24, 34, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px; padding: 32px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85); scroll-margin-top: 90px; }
+        .glass-card { background: rgba(18, 24, 34, 0.82); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px; padding: 32px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85); scroll-margin-top: 90px; }
         .full-card { max-width: 640px; }
 
         h2 { font-size: 22px; margin-bottom: 6px; font-weight: 700; }
         .sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
         .input-group { margin-bottom: 14px; text-align: left; }
         label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; font-weight: 500; }
-        input, textarea { width: 100%; background: rgba(10, 15, 22, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
+        input, textarea { width: 100%; background: rgba(10, 15, 22, 0.88); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
         input:focus, textarea:focus { outline: none; border-color: #8b5cf6; }
         textarea { resize: vertical; min-height: 75px; }
 
@@ -60,7 +61,7 @@
         .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
         /* Статус */
-        .status-box { padding: 20px; border-radius: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); text-align: center; }
+        .status-box { padding: 22px; border-radius: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); text-align: center; }
         .status-badge { display: inline-block; padding: 6px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
         .st-wait { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
         .st-review { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
@@ -68,7 +69,7 @@
         .st-reject { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         /* Админка */
-        .app-item { background: rgba(10, 15, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; margin-bottom: 14px; text-align: left; }
+        .app-item { background: rgba(10, 15, 22, 0.92); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; padding: 18px; margin-bottom: 14px; text-align: left; }
         .app-item p { font-size: 13px; color: #cbd5e1; margin-bottom: 6px; line-height: 1.4; }
         .app-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
         .act-btn { border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: #fff; }
@@ -93,7 +94,7 @@
         <a href="#auth-section" class="nav-btn accent">Регистрация</a>
     </div>
     <div class="nav-links hidden" id="navUser">
-        <a href="#apply-section" class="nav-btn" id="navUserNick">👤 Профиль</a>
+        <a href="#apply-section" class="nav-btn" id="navUserBadge"><span class="sync-dot"></span> <span id="navUserNick">Аккаунт</span></a>
         <button type="button" class="nav-btn" onclick="logoutUser()">Выйти</button>
     </div>
 </header>
@@ -106,23 +107,20 @@
     <a href="#auth-section" class="btn-glow" id="heroBtn">Подать заявку на 3 лвл →</a>
 </section>
 
-<!-- НИЖНЯЯ ЧАСТЬ САЙТА: РЕГИСТРАЦИЯ / ВХОД / АНКЕТА / СТАТУС -->
+<!-- НИЖНЯЯ ЧАСТЬ САЙТА -->
 <main class="content-section">
 
     <!-- БЛОК 1: РЕГИСТРАЦИЯ И ВХОД -->
     <div class="grid-two" id="auth-section">
         <div class="glass-card">
             <h2>1. Регистрация</h2>
-            <p class="sub">Создайте новый аккаунт, если вы здесь впервые.</p>
+            <p class="sub">Создает облачный аккаунт с автоматической синхронизацией.</p>
             <form onsubmit="handleRegister(event)">
                 <div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" placeholder="Например: Shadow" required></div>
                 <div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" placeholder="••••••••" required></div>
-                <button type="submit" class="btn-submit" id="reg-btn">Зарегистрироваться</button>
+                <button type="submit" class="btn-submit" id="reg-btn">Создать аккаунт и синхронизировать</button>
             </form>
         </div>
 
         <div class="glass-card">
             <h2>Вход в аккаунт</h2>
-            <p class="sub">Уже создавали профиль? Войдите, чтобы увидеть статус.</p>
-            <form onsubmit="handleLogin(event)">
-                <div class="input-group"><label>Ваш логин (Никнейм)</label><input type="text" id="log-login" placeholder="Введите логин" required></div>
