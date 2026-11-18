@@ -5,132 +5,133 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shell Squad — Открытый набор на 3 ЛВЛ</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
-body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 20px 60px;overflow-x:hidden;position:relative}
-.bg-layer{position:fixed;inset:-20px;background-image:linear-gradient(to bottom,rgba(13,19,26,.35),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none;transition:transform .2s ease-out}
-.sky-birds{position:fixed;top:0;left:0;width:100%;height:60%;pointer-events:none;z-index:1;overflow:hidden}
-.bird-box{position:absolute;left:-10%;animation:fly linear infinite;opacity:.65}
-.bird{width:24px;height:12px;fill:none;stroke:rgba(203,213,225,.75);stroke-width:2;stroke-linecap:round;animation:flap .8s ease-in-out infinite alternate}
-@keyframes fly{0%{transform:translate(0,0) scale(.8)}50%{transform:translate(60vw,-25px) scale(1)}100%{transform:translate(120vw,10px) scale(.7)}}
-@keyframes flap{0%{transform:scaleY(1)}100%{transform:scaleY(-.6)}}
-.fireflies{position:fixed;inset:0;pointer-events:none;z-index:2}
-.firefly{position:absolute;width:4px;height:4px;background:#c4b5fd;border-radius:50%;box-shadow:0 0 10px 2px rgba(167,139,250,.8);animation:floatF ease-in-out infinite;opacity:0}
-@keyframes floatF{0%,100%{transform:translate(0,0);opacity:0}50%{transform:translate(25px,-60px);opacity:.85}}
-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,14,20,.85),transparent);backdrop-filter:blur(6px)}
-.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:10px;align-items:center}
-.nav-btn{text-decoration:none;background:rgba(18,24,34,.82);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:9px 18px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px}
-.nav-btn:hover{background:rgba(139,92,246,.35);border-color:rgba(167,139,250,.6)}
-.nav-btn.accent{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border:none}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;display:inline-block}
-.view-screen{position:relative;z-index:10;width:100%;display:flex;flex-direction:column;align-items:center;animation:fadeIn .3s ease-out}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.hero-box{text-align:center;max-width:580px}
-.tag{display:inline-block;padding:6px 16px;background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
-h1.main-title{font-size:56px;font-weight:800;letter-spacing:-1px;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,#cbd5e1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p.hero-desc{color:#e2e8f0;font-size:16px;line-height:1.6;margin-bottom:34px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.btn-glow{text-decoration:none;display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;padding:18px 38px;font-size:17px;font-weight:600;border-radius:16px;box-shadow:0 10px 30px rgba(139,92,246,.45);transition:.2s}
-.btn-glow:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 15px 40px rgba(139,92,246,.7)}
-.glass-card{background:rgba(18,24,34,.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:34px;width:100%;max-width:500px;box-shadow:0 25px 50px -12px rgba(0,0,0,.85)}
-.admin-wide{max-width:720px}
-h2{font-size:23px;margin-bottom:6px;font-weight:700}
-.sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
-.input-group{margin-bottom:14px;text-align:left}
-label{display:block;font-size:13px;color:#cbd5e1;margin-bottom:6px;font-weight:500}
-input,textarea{width:100%;background:rgba(10,15,22,.9);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:14px}
-input:focus,textarea:focus{outline:none;border-color:#8b5cf6}
-textarea{resize:vertical;min-height:75px}
-.btn-submit{width:100%;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;transition:.2s}
-.btn-submit:hover{opacity:.92}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed}
-.switch-link{margin-top:14px;text-align:center;font-size:13px;color:#94a3b8}
-.switch-link a{color:#a78bfa;text-decoration:underline}
-.status-box{padding:22px;border-radius:16px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.12);text-align:center}
-.status-badge{display:inline-block;padding:6px 14px;border-radius:10px;font-weight:700;font-size:14px;margin-bottom:10px}
-.st-wait{background:rgba(234,179,8,.15);color:#facc15;border:1px solid rgba(234,179,8,.3)}
-.st-review{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
-.st-accept{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
-.st-reject{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
-.app-item{background:rgba(10,15,22,.92);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px;margin-bottom:14px;text-align:left}
-.app-item p{font-size:13px;color:#cbd5e1;margin-bottom:6px;line-height:1.4}
-.app-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.act-btn{border:none;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:#fff}
-.btn-take{background:#3b82f6}.btn-yes{background:#10b981}.btn-no{background:#ef4444}
-.hidden{display:none!important}
-footer{position:fixed;bottom:12px;left:0;right:0;z-index:15;text-align:center;color:#64748b;font-size:12px;pointer-events:none}
-footer a{color:#94a3b8;text-decoration:none;pointer-events:auto}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+body { min-height: 100vh; color: #f1f5f9; background: #0d131a; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 20px 60px; overflow-x: hidden; position: relative; }
+.bg-layer { position: fixed; inset: -20px; background-image: linear-gradient(to bottom, rgba(13,19,26,0.35), rgba(10,14,20,0.92)), url('bg.jpg'), url('https://unsplash.com'); background-size: cover; background-position: center; z-index: 0; pointer-events: none; }
+.sky-birds { position: fixed; top: 0; left: 0; width: 100%; height: 60%; pointer-events: none; z-index: 1; overflow: hidden; }
+.bird-box { position: absolute; left: -10%; animation: fly linear infinite; opacity: 0.65; }
+.bird { width: 24px; height: 12px; fill: none; stroke: rgba(203,213,225,0.75); stroke-width: 2; stroke-linecap: round; animation: flap 0.8s ease-in-out infinite alternate; }
+@keyframes fly { 0% { transform: translate(0, 0) scale(0.8); } 50% { transform: translate(60vw, -25px) scale(1); } 100% { transform: translate(120vw, 10px) scale(0.7); } }
+@keyframes flap { 0% { transform: scaleY(1); } 100% { transform: scaleY(-0.6); } }
+header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(10,14,20,0.85), transparent); backdrop-filter: blur(6px); }
+.logo { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; }
+.nav-links { display: flex; gap: 10px; align-items: center; }
+.nav-btn { text-decoration: none; background: rgba(18,24,34,0.82); border: 1px solid rgba(255,255,255,0.18); color: #f1f5f9; padding: 9px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.nav-btn.accent { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border: none; }
+.sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; display: inline-block; }
+.view-screen { position: relative; z-index: 10; width: 100%; display: flex; flex-direction: column; align-items: center; }
+.hero-box { text-align: center; max-width: 580px; }
+.tag { display: inline-block; padding: 6px 16px; background: rgba(16,185,129,0.16); border: 1px solid rgba(16,185,129,0.4); color: #6ee7b7; border-radius: 99px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
+h1.main-title { font-size: 56px; font-weight: 800; margin-bottom: 14px; background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+p.hero-desc { color: #e2e8f0; font-size: 16px; line-height: 1.6; margin-bottom: 34px; }
+.btn-glow { text-decoration: none; display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 18px 38px; font-size: 17px; font-weight: 600; border-radius: 16px; box-shadow: 0 10px 30px rgba(139,92,246,0.45); cursor: pointer; border: none; }
+.glass-card { background: rgba(18,24,34,0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px; padding: 34px; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85); }
+.admin-wide { max-width: 720px; }
+h2 { font-size: 23px; margin-bottom: 6px; }
+.sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+.input-group { margin-bottom: 14px; text-align: left; }
+label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
+input, textarea { width: 100%; background: rgba(10,15,22,0.9); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
+textarea { resize: vertical; min-height: 75px; }
+.btn-submit { width: 100%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+.switch-link { margin-top: 14px; text-align: center; font-size: 13px; color: #94a3b8; }
+.switch-link a { color: #a78bfa; cursor: pointer; }
+.status-box { padding: 22px; border-radius: 16px; background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.12); text-align: center; }
+.status-badge { display: inline-block; padding: 6px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+.st-wait { background: rgba(234,179,8,0.15); color: #facc15; }
+.st-review { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.st-accept { background: rgba(16,185,129,0.15); color: #34d399; }
+.st-reject { background: rgba(239,68,68,0.15); color: #f87171; }
+.app-item { background: rgba(10,15,22,0.92); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 18px; margin-bottom: 14px; text-align: left; }
+.app-item p { font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
+.app-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.act-btn { border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: #fff; }
+.btn-take { background: #3b82f6; }
+.btn-yes { background: #10b981; }
+.btn-no { background: #ef4444; }
+.hidden { display: none !important; }
+footer { position: fixed; bottom: 12px; left: 0; right: 0; z-index: 15; text-align: center; color: #64748b; font-size: 12px; }
+footer a { color: #94a3b8; text-decoration: none; cursor: pointer; }
 </style>
 </head>
 <body>
-<div class="bg-layer" id="bgLayer"></div>
+<div class="bg-layer"></div>
 <div class="sky-birds" id="skyBirds"></div>
-<div class="fireflies" id="fireflies"></div>
 
 <header>
-<a href="#home" class="logo">Shell Squad</a>
-<div class="nav-links" id="navGuest">
-<a href="#login" class="nav-btn">Войти</a>
-<a href="#register" class="nav-btn accent">Регистрация</a>
-</div>
-<div class="nav-links hidden" id="navUser">
-<a href="#apply" class="nav-btn" id="navApplyLink">Заявка</a>
-<a href="#profile" class="nav-btn"><span class="sync-dot"></span> <span id="navUserNick">Профиль</span></a>
-<button type="button" class="nav-btn" onclick="logoutUser()">Выйти</button>
-</div>
+  <a href="#home" class="logo" onclick="go('home')">Shell Squad</a>
+  <div class="nav-links" id="navGuest">
+    <a href="#login" class="nav-btn" onclick="go('login')">Войти</a>
+    <a href="#register" class="nav-btn accent" onclick="go('register')">Регистрация</a>
+  </div>
+  <div class="nav-links hidden" id="navUser">
+    <a href="#apply" class="nav-btn" id="navApplyLink" onclick="goApply()">Заявка</a>
+    <a href="#profile" class="nav-btn" onclick="go('profile')"><span class="sync-dot"></span> <span id="navUserNick">Профиль</span></a>
+    <button type="button" class="nav-btn" onclick="logoutUser()">Выйти</button>
+  </div>
 </header>
 
 <section class="view-screen" id="view-home">
-<div class="hero-box">
-<div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
-<h1 class="main-title">Shell Squad</h1>
-<p class="hero-desc">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
-<a href="#register" class="btn-glow" id="heroBtn">Подать заявку на 3 лвл →</a>
-</div>
+  <div class="hero-box">
+    <div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
+    <h1 class="main-title">Shell Squad</h1>
+    <p class="hero-desc">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
+    <button type="button" class="btn-glow" onclick="goApply()">Подать заявку на 3 лвл →</button>
+  </div>
 </section>
 
 <section class="view-screen hidden" id="view-register">
-<div class="glass-card">
-<h2>Регистрация</h2>
-<p class="sub">Создайте аккаунт, чтобы настроить профиль и подать заявку.</p>
-<form onsubmit="handleRegister(event)">
-<div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" placeholder="Например: Krust" required></div>
-<div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" placeholder="••••••••" required></div>
-<button type="submit" class="btn-submit" id="reg-btn">Создать аккаунт</button>
-</form>
-<div class="switch-link">Уже есть аккаунт? <a href="#login">Войти</a></div>
-</div>
+  <div class="glass-card">
+    <h2>Регистрация</h2>
+    <p class="sub">Создайте аккаунт, чтобы настроить профиль и подать заявку.</p>
+    <form onsubmit="handleRegister(event)">
+      <div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" required></div>
+      <div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" required></div>
+      <button type="submit" class="btn-submit">Создать аккаунт</button>
+    </form>
+    <div class="switch-link">Уже есть аккаунт? <a href="#login" onclick="go('login')">Войти</a></div>
+  </div>
 </section>
 
 <section class="view-screen hidden" id="view-login">
-<div class="glass-card">
-<h2>Вход в аккаунт</h2>
-<p class="sub">Войдите, чтобы открыть профиль или проверить статус заявки.</p>
-<form onsubmit="handleLogin(event)">
-<div class="input-group"><label>Ваш логин (Никнейм)</label><input type="text" id="log-login" placeholder="Введите ваш логин" required></div>
-<div class="input-group"><label>Ваш пароль</label><input type="password" id="log-pass" placeholder="••••••••" required></div>
-<button type="submit" class="btn-submit" id="log-btn">Войти в аккаунт</button>
-</form>
-<div class="switch-link">Нет аккаунта? <a href="#register">Зарегистрироваться</a></div>
-</div>
+  <div class="glass-card">
+    <h2>Вход в аккаунт</h2>
+    <p class="sub">Войдите, чтобы открыть профиль или проверить статус заявки.</p>
+    <form onsubmit="handleLogin(event)">
+      <div class="input-group"><label>Ваш логин (Никнейм)</label><input type="text" id="log-login" required></div>
+      <div class="input-group"><label>Ваш пароль</label><input type="password" id="log-pass" required></div>
+      <button type="submit" class="btn-submit">Войти в аккаунт</button>
+    </form>
+    <div class="switch-link">Нет аккаунта? <a href="#register" onclick="go('register')">Зарегистрироваться</a></div>
+  </div>
 </section>
 
 <section class="view-screen hidden" id="view-profile">
-<div class="glass-card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-<h2 style="margin:0">Настройка профиля</h2>
-<span style="font-size:12px;color:#34d399;display:flex;align-items:center;gap:6px"><span class="sync-dot"></span> В сети</span>
-</div>
-<p class="sub">Логин аккаунта: <strong id="prof-login-label" style="color:#fff"></strong></p>
-<form onsubmit="saveProfile(event)">
-<div class="input-group"><label>Отображаемый никнейм</label><input type="text" id="prof-nick" placeholder="Ваш игровой ник" required></div>
-<div class="input-group"><label>Ваш основной Discord</label><input type="text" id="prof-discord" placeholder="Например: krust"></div>
-<button type="submit" class="btn-submit" id="prof-btn">Сохранить настройки</button>
-</form>
-<div class="switch-link"><a href="#apply" id="profNextLink">Перейти к подаче заявки →</a></div>
-</div>
+  <div class="glass-card">
+    <h2>Настройка профиля</h2>
+    <p class="sub">Логин: <strong id="prof-login-label" style="color:#fff"></strong></p>
+    <form onsubmit="saveProfile(event)">
+      <div class="input-group"><label>Отображаемый никнейм</label><input type="text" id="prof-nick" required></div>
+      <div class="input-group"><label>Ваш основной Discord</label><input type="text" id="prof-discord"></div>
+      <button type="submit" class="btn-submit">Сохранить настройки</button>
+    </form>
+    <div class="switch-link"><a href="#apply" onclick="goApply()">Перейти к подаче заявки →</a></div>
+  </div>
 </section>
 
 <section class="view-screen hidden" id="view-apply">
-<div class="glass-card">
-<h2>Заявка на 3 лвл</h2>
-<p class="sub" id="apply-sub">Заполните анкету честно. Заявка сразу отправится проверяющим.</p>
+  <div class="glass-card">
+    <h2>Заявка на 3 лвл</h2>
+    <p class="sub">Заполните анкету честно.</p>
+    <form onsubmit="handleApplication(event)">
+      <div class="input-group"><label>Ваше имя</label><input type="text" id="f-name" required></div>
+      <div class="input-group"><label>Ваш возраст</label><input type="number" id="f-age" min="10" max="99" required></div>
+      <div class="input-group"><label>Почему именно вы?</label><textarea id="f-why" required></textarea></div>
+      <div class="input-group"><label>Сколько в софтах?</label><input type="text" id="f-exp" required></div>
+      <div class="input-group"><label>С каким читом играете?</label><input type="text" id="f-soft" required></div>
+      <div class="input-group"><label>Ваш Discord</label><input type="text" id="f-discord" required></div>
+      <button type="submit" class="btn-submit">Отправить заявку на 3 лвл</button>
+    </form>
+  </div>
+</section>
+
