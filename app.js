@@ -1,5 +1,5 @@
-const DB = 'https://shellsquad-default-rtdb.firebaseio.com/';
-const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';
+const BLOB_URL = 'https://jsonblob.com/01a1efe3-e112-741f-9111-24955f15a4a3/json';
+const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';';
 const PASS = 'shell2026';
 let tmr = null;
 
@@ -11,30 +11,21 @@ const sky=document.getElementById('sky');
 if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
 
 async function getDB(){
-  let id = localStorage.getItem('s_blob_id');
-  if(!id){
-    const r = await fetch('https://jsonblob.com', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify({users:{}, apps:{}})
-    });
-    const loc = r.headers.get('Location') || r.headers.get('location') || '';
-    id = loc.split('/').pop();
-    if(id) localStorage.setItem('s_blob_id', id);
-  }
-  const res = await fetch('https://jsonblob.com/' + id);
-  if(!res.ok) return {users:{}, apps:{}};
-  return await res.json();
+  const res = await fetch(BLOB_URL);
+  if(!res.ok) throw new Error('Ошибка облака HTTP ' + res.status);
+  const d = await res.json();
+  if(!d.users || Array.isArray(d.users)) d.users = {};
+  if(!d.apps || Array.isArray(d.apps)) d.apps = {};
+  return d;
 }
 
 async function saveDB(data){
-  const id = localStorage.getItem('s_blob_id');
-  if(!id) return;
-  await fetch('https://jsonblob.com/' + id, {
+  const res = await fetch(BLOB_URL, {
     method: 'PUT',
     headers: {'Content-Type':'application/json','Accept':'application/json'},
     body: JSON.stringify(data)
   });
+  if(!res.ok) throw new Error('Ошибка сохранения HTTP ' + res.status);
 }
 
 async function startAll(){
@@ -48,7 +39,7 @@ async function startAll(){
         localStorage.setItem('s_login',u.login);
         localStorage.setItem('s_ds',u.discord||'');
         if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
-      }
+      }else{localStorage.clear()}
     }catch(e){}
   }
 
@@ -91,13 +82,7 @@ function ui(){
 }
 
 window.addEventListener('DOMContentLoaded',startAll);
-function logout(){
-  const blob=localStorage.getItem('s_blob_id');
-  localStorage.clear();
-  if(blob)localStorage.setItem('s_blob_id',blob);
-  if(tmr)clearInterval(tmr);
-  location.href='index.html';
-}
+function logout(){localStorage.clear();if(tmr)clearInterval(tmr);location.href='index.html'}
 
 async function reg(e){
   e.preventDefault();
@@ -194,3 +179,9 @@ async function loadAdm(){
     if(a.status==='review')st='👀 На рассмотрении ('+a.reviewer+')';
     if(a.status==='accept')st='✅ Взят ('+a.reviewer+')';
     if(a.status==='reject')st='❌ Отклонен ('+a.reviewer+')';
+    l.innerHTML+='<div class="item"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><strong>'+a.login+' ('+a.name+', '+a.age+')</strong><span style="color:#c4b5fd">'+st+'</span></div><p>Discord: '+a.discord+' | Опыт: '+a.exp+' | Чит: '+a.soft+'</p><p>'+a.why+'</p><div class="acts"><button class="abtn" style="background:#3b82f6" onclick="setA(\''+id+'\',\'review\')">👀 Взять на рассмотрение</button><button class="abtn" style="background:#10b981" onclick="setA(\''+id+'\',\'accept\')">✅ Взять</button><button class="abtn" style="background:#ef4444" onclick="setA(\''+id+'\',\'reject\')">❌ Отклонить</button></div></div>';
+  }
+}
+
+async function setA(id,status){
+  const db=await getDB();
