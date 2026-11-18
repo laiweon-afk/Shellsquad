@@ -77,7 +77,6 @@ h1{font-size:58px;font-weight:700;line-height:1.12;letter-spacing:-1px;margin-bo
   <div class="stat-card">👥 Всего в Discord: <strong id="dsTotal">...</strong></div>
   <div class="stat-card"><span class="st-dot-on"></span> Онлайн: <strong id="dsOnline" style="color:#34d399">...</strong></div>
   <div class="stat-card"><span class="st-dot-off"></span> Офлайн: <strong id="dsOffline">...</strong></div>
-  <div class="stat-card">📋 Заявок на сайте: <strong id="siteApps">...</strong></div>
 </div>
 
 <div class="modal hidden" id="infoModal" onclick="if(event.target===this)this.classList.add('hidden')">
@@ -88,6 +87,33 @@ h1{font-size:58px;font-weight:700;line-height:1.12;letter-spacing:-1px;margin-bo
   </div>
 </div>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=4"></script>
+<script>
+(async function updateDiscordCounter(){
+  const invite = 't6Cj7cMbP';
+  const api = 'https://discord.com' + invite + '?with_counts=true';
+  const urls = [
+    'https://corsproxy.io?' + encodeURIComponent(api),
+    'https://allorigins.win' + encodeURIComponent(api),
+    api
+  ];
+  for (const u of urls) {
+    try {
+      const r = await fetch(u, {cache: 'no-store'});
+      if (!r.ok) continue;
+      const d = await r.json();
+      if (d && typeof d.approximate_member_count === 'number') {
+        const tot = d.approximate_member_count;
+        const on = d.approximate_presence_count || 0;
+        const off = Math.max(0, tot - on);
+        document.getElementById('dsTotal').textContent = tot;
+        document.getElementById('dsOnline').textContent = on;
+        document.getElementById('dsOffline').textContent = off;
+        return;
+      }
+    } catch (e) {}
+  }
+})();
+</script>
 </body>
 </html>
