@@ -1,28 +1,53 @@
-const DB = 'https://shellsquad-default-rtdb.firebaseio.com';
+const DB = 'https://shellsquad-default-rtdb.firebaseio.com/';
 const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';
 const PASS = 'shell2026';
 let tmr = null;
 
-function keyOf(s){return Array.from(s.trim().toLowerCase()).map(c=>c.charCodeAt(0).toString(16)).join('')}
+function keyOf(s){return s.trim().toLowerCase()}
 function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));const el=document.getElementById(id);if(el)el.classList.remove('hidden')}
 function backP(){show(localStorage.getItem('s_app')?'b-st':'b-app')}
 
 const sky=document.getElementById('sky');
 if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
 
+async function getDB(){
+  let id = localStorage.getItem('s_blob_id');
+  if(!id){
+    const r = await fetch('https://jsonblob.com', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({users:{}, apps:{}})
+    });
+    const loc = r.headers.get('Location') || r.headers.get('location') || '';
+    id = loc.split('/').pop();
+    if(id) localStorage.setItem('s_blob_id', id);
+  }
+  const res = await fetch('https://jsonblob.com/' + id);
+  if(!res.ok) return {users:{}, apps:{}};
+  return await res.json();
+}
+
+async function saveDB(data){
+  const id = localStorage.getItem('s_blob_id');
+  if(!id) return;
+  await fetch('https://jsonblob.com/' + id, {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify(data)
+  });
+}
+
 async function startAll(){
   const k=localStorage.getItem('s_key');
   if(k){
     try{
-      const r=await fetch(DB+'/users/'+k+'.json');
-      if(r.ok){
-        const u=await r.json();
-        if(u){
-          localStorage.setItem('s_nick',u.displayNick||u.login);
-          localStorage.setItem('s_login',u.login);
-          localStorage.setItem('s_ds',u.discord||'');
-          if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
-        }else{localStorage.clear()}
+      const db=await getDB();
+      const u=db.users[k];
+      if(u){
+        localStorage.setItem('s_nick',u.displayNick||u.login);
+        localStorage.setItem('s_login',u.login);
+        localStorage.setItem('s_ds',u.discord||'');
+        if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
       }
     }catch(e){}
   }
@@ -66,22 +91,27 @@ function ui(){
 }
 
 window.addEventListener('DOMContentLoaded',startAll);
-function logout(){localStorage.clear();if(tmr)clearInterval(tmr);location.href='index.html'}
+function logout(){
+  const blob=localStorage.getItem('s_blob_id');
+  localStorage.clear();
+  if(blob)localStorage.setItem('s_blob_id',blob);
+  if(tmr)clearInterval(tmr);
+  location.href='index.html';
+}
 
 async function reg(e){
   e.preventDefault();
   const l=document.getElementById('r-l').value.trim(),p=document.getElementById('r-p').value,k=keyOf(l),b=document.getElementById('r-btn');
-  b.disabled=true;b.textContent='Проверка...';
+  b.disabled=true;b.textContent='Создание аккаунта...';
   try{
-    const c=await fetch(DB+'/users/'+k+'.json');
-    if(!c.ok)throw new Error('HTTP '+c.status+' при чтении');
-    if(await c.json()){alert('Этот логин уже занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
-    const w=await fetch(DB+'/users/'+k+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:l,displayNick:l,discord:'',pass:p,appId:''})});
-    if(!w.ok)throw new Error('HTTP '+w.status+' при записи');
+    const db=await getDB();
+    if(db.users[k]){alert('Этот логин уже занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
+    db.users[k]={login:l,displayNick:l,discord:'',pass:p,appId:''};
+    await saveDB(db);
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',l);localStorage.setItem('s_login',l);localStorage.removeItem('s_app');
     location.href='index.html';
   }catch(err){
-    alert('Причина ошибки: '+err.message);
+    alert('Ошибка: '+err.message);
     b.disabled=false;b.textContent='Зарегистрироваться и продолжить';
   }
 }
@@ -91,15 +121,14 @@ async function log(e){
   const l=document.getElementById('l-l').value.trim(),p=document.getElementById('l-p').value,k=keyOf(l),b=document.getElementById('l-btn');
   b.disabled=true;b.textContent='Вход...';
   try{
-    const r=await fetch(DB+'/users/'+k+'.json');
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const u=await r.json();
+    const db=await getDB();
+    const u=db.users[k];
     if(!u||u.pass!==p){alert('Неверный логин или пароль!');b.disabled=false;b.textContent='Войти';return}
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',u.displayNick||u.login);localStorage.setItem('s_login',u.login);localStorage.setItem('s_ds',u.discord||'');
     if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
     location.href='index.html';
   }catch(err){
-    alert('Причина ошибки: '+err.message);
+    alert('Ошибка: '+err.message);
     b.disabled=false;b.textContent='Войти';
   }
 }
@@ -107,7 +136,8 @@ async function log(e){
 async function saveP(e){
   e.preventDefault();
   const k=localStorage.getItem('s_key'),n=document.getElementById('p-nick').value.trim(),d=document.getElementById('p-ds').value.trim();
-  await fetch(DB+'/users/'+k+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({displayNick:n,discord:d})});
+  const db=await getDB();
+  if(db.users[k]){db.users[k].displayNick=n;db.users[k].discord=d;await saveDB(db);}
   localStorage.setItem('s_nick',n);localStorage.setItem('s_ds',d);ui();alert('Профиль обновлен!');
 }
 
@@ -115,17 +145,18 @@ async function sendApp(e){
   e.preventDefault();
   const u=localStorage.getItem('s_nick'),l=localStorage.getItem('s_login')||u,k=localStorage.getItem('s_key'),b=document.getElementById('s-btn');
   b.disabled=true;b.textContent='Отправка...';
+  const id='app_'+Date.now();
   const app={login:u+' ('+l+')',userKey:k,name:document.getElementById('f-name').value.trim(),age:document.getElementById('f-age').value.trim(),why:document.getElementById('f-why').value.trim(),exp:document.getElementById('f-exp').value.trim(),soft:document.getElementById('f-soft').value.trim(),discord:document.getElementById('f-ds').value.trim(),status:'wait',reviewer:''};
   try{
-    const r=await fetch(DB+'/applications.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(app)});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const res=await r.json(),id=res.name;
+    const db=await getDB();
+    db.apps[id]=app;
+    if(db.users[k])db.users[k].appId=id;
+    await saveDB(db);
     localStorage.setItem('s_app',id);
-    await fetch(DB+'/users/'+k+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({appId:id})});
     fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'Shell Squad',embeds:[{title:'🌿 Новая заявка на 3 ЛВЛ!',description:'[Открыть панель проверки]('+location.origin+location.pathname+'?mode=admin)',color:9055202,fields:[{name:'Игрок',value:app.login,inline:true},{name:'Имя/Возраст',value:app.name+' ('+app.age+')',inline:true},{name:'Discord',value:app.discord,inline:true},{name:'Опыт',value:app.exp,inline:true},{name:'Чит',value:app.soft,inline:true},{name:'Почему он',value:app.why}]}]})}).catch(()=>{});
     location.href='index.html';
   }catch(err){
-    alert('Причина ошибки: '+err.message);
+    alert('Ошибка отправки: '+err.message);
     b.disabled=false;b.textContent='Отправить заявку';
   }
 }
@@ -133,7 +164,8 @@ async function sendApp(e){
 function watch(id){once(id);if(tmr)clearInterval(tmr);tmr=setInterval(()=>once(id),4000)}
 async function once(id){
   try{
-    const r=await fetch(DB+'/applications/'+id+'.json'),d=await r.json();if(!d)return;
+    const db=await getDB();
+    const d=db.apps[id];if(!d)return;
     const cls=d.status==='review'?'st-review':d.status==='accept'?'st-accept':d.status==='reject'?'st-reject':'st-wait';
     const bTxt=d.status==='review'?'👀 Взято на рассмотрение':d.status==='accept'?'✅ Вы взяты!':d.status==='reject'?'❌ Вы отклонены':'⏳ Ожидает рассмотрения';
     const mTxt=d.status==='review'?'Администратор проверяет вашу анкету.':d.status==='accept'?'Поздравляем! С вами свяжутся в ДС, ждите.':d.status==='reject'?'Ваша заявка отклонена. С вами свяжутся в ДС при необходимости, ждите.':'Ваша анкета отправлена. Ожидайте.';
@@ -154,8 +186,8 @@ function admLog(e){
 
 async function loadAdm(){
   const l=document.getElementById('a-list');l.innerHTML='Загрузка...';
-  const r=await fetch(DB+'/applications.json'),d=await r.json();
-  if(!d){l.innerHTML='Заявок нет.';return}
+  const db=await getDB(),d=db.apps;
+  if(!d||!Object.keys(d).length){l.innerHTML='Заявок нет.';return}
   l.innerHTML='';
   for(const[id,a]of Object.entries(d).reverse()){
     let st='⏳ Ожидает';
