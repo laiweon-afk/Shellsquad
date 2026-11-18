@@ -37,7 +37,7 @@ textarea{resize:vertical;min-height:70px}
 <body>
 <div class="bg"></div>
 <header>
-  <a href="index.html" class="logo">← Shell Squad</a>
+  <a href="index.html" class="logo">← На главную</a>
   <div class="nav hidden" id="navU">
     <button type="button" class="btn-s" onclick="show('b-prof')"><span class="dot"></span> <span id="uNick">Профиль</span></button>
     <button type="button" class="btn-s" onclick="logout()">Выйти</button>
@@ -45,19 +45,19 @@ textarea{resize:vertical;min-height:70px}
 </header>
 
 <div class="card" id="b-reg">
-  <h2>Регистрация</h2>
-  <p class="sub">Создайте аккаунт — он сразу сохранится и синхронизируется.</p>
+  <h2>Регистрация аккаунта</h2>
+  <p class="sub">Создайте профиль — он сразу синхронизируется с основным сайтом.</p>
   <form onsubmit="reg(event)">
-    <div class="grp"><label>Логин (Никнейм)</label><input type="text" id="r-l" required></div>
-    <div class="grp"><label>Пароль</label><input type="password" id="r-p" required></div>
-    <button type="submit" class="btn" id="r-btn">Создать аккаунт</button>
+    <div class="grp"><label>Придумайте логин (Никнейм)</label><input type="text" id="r-l" required></div>
+    <div class="grp"><label>Придумайте пароль</label><input type="password" id="r-p" required></div>
+    <button type="submit" class="btn" id="r-btn">Зарегистрироваться и продолжить</button>
   </form>
   <div class="link">Уже есть аккаунт? <span onclick="show('b-log')">Войти</span></div>
 </div>
 
 <div class="card hidden" id="b-log">
   <h2>Вход в аккаунт</h2>
-  <p class="sub">Войдите, чтобы открыть профиль и статус заявки.</p>
+  <p class="sub">Войдите, чтобы вернуться на сайт под своим аккаунтом.</p>
   <form onsubmit="log(event)">
     <div class="grp"><label>Ваш логин</label><input type="text" id="l-l" required></div>
     <div class="grp"><label>Ваш пароль</label><input type="password" id="l-p" required></div>
@@ -72,7 +72,7 @@ textarea{resize:vertical;min-height:70px}
   <form onsubmit="saveP(event)">
     <div class="grp"><label>Отображаемый никнейм</label><input type="text" id="p-nick" required></div>
     <div class="grp"><label>Ваш основной Discord</label><input type="text" id="p-ds"></div>
-    <button type="submit" class="btn">Сохранить</button>
+    <button type="submit" class="btn">Сохранить настройки</button>
   </form>
   <div class="link"><span onclick="backP()">← Вернуться к заявке</span></div>
 </div>
@@ -137,11 +137,12 @@ async function init(){
         localStorage.setItem('s_ds',u.discord||'');
         if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
         ui();
+        if(m==='profile'){show('b-prof');return}
         if(u.appId){show('b-st');watch(u.appId)}else{show('b-app')}
         return;
       }
     }catch(e){
-      if(localStorage.getItem('s_nick')){ui();show(localStorage.getItem('s_app')?'b-st':'b-app');return}
+      if(localStorage.getItem('s_nick')){ui();if(m==='profile'){show('b-prof');return}show(localStorage.getItem('s_app')?'b-st':'b-app');return}
     }
   }
   show(m==='login'?'b-log':'b-reg');
@@ -161,13 +162,12 @@ function ui(){
 
 window.addEventListener('DOMContentLoaded',init);
 
-function logout(){localStorage.clear();if(tmr)clearInterval(tmr);document.getElementById('navU').classList.add('hidden');show('b-log')}
+function logout(){localStorage.clear();if(tmr)clearInterval(tmr);location.href='index.html'}
 
 async function reg(e){
   e.preventDefault();
   const l=document.getElementById('r-l').value.trim(),p=document.getElementById('r-p').value,k=keyOf(l),b=document.getElementById('r-btn');
-  b.disabled=true;b.textContent='Создание...';
+  b.disabled=true;b.textContent='Синхронизация...';
   try{
     const c=await fetch(DB+'/users/'+k+'.json');
-    if(await c.json()){alert('Логин занят! Войдите.');b.disabled=false;b.textContent='Создать аккаунт';show('b-log');return}
-    await fetch(DB+'/users/'+k+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:l,displayNick:l,discord:'',pass:p,appId:''})});
+    if(await c.json()){alert('Логин занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
