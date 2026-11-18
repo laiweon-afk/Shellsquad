@@ -185,3 +185,7 @@ async function loadAdm(){
 }
 
 async function setA(id,status){
+   const db=await getDB();
+  if(db.apps[id]){db.apps[id].status=status;db.apps[id].reviewer=localStorage.getItem('s_adm')||'Админ';await saveDB(db);}
+  loadAdm();
+}
