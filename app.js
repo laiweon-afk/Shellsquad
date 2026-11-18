@@ -1,5 +1,5 @@
 const DB = 'https://shellsquad-default-rtdb.firebaseio.com';
-const HOOK = 'https://' + '://discord.com';
+const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';
 const PASS = 'shell2026';
 let tmr = null;
 
