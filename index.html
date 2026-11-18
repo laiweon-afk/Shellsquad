@@ -9,7 +9,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
         body { color: #f1f5f9; background: #0d131a; overflow-x: hidden; position: relative; }
         
-        /* Живой фон */
+        /* Фон */
         .bg-layer { position: fixed; inset: -20px; background-image: linear-gradient(to bottom, rgba(13,19,26,0.35), rgba(10,14,20,0.92)), url('bg.jpg'), url('https://unsplash.com'); background-size: cover; background-position: center; z-index: 0; pointer-events: none; transition: transform 0.2s ease-out; }
         
         /* Птицы и светлячки */
@@ -24,7 +24,7 @@
         @keyframes floatF { 0%, 100% { transform: translate(0, 0); opacity: 0; } 50% { transform: translate(25px, -60px); opacity: 0.85; } }
 
         /* Шапка сайта */
-        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(10,14,20,0.8), transparent); backdrop-filter: blur(6px); }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(10,14,20,0.85), transparent); backdrop-filter: blur(6px); }
         .logo { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
         .nav-links { display: flex; gap: 10px; align-items: center; }
         .nav-btn { text-decoration: none; background: rgba(18, 24, 34, 0.82); border: 1px solid rgba(255, 255, 255, 0.18); color: #f1f5f9; padding: 9px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
@@ -40,25 +40,23 @@
         .btn-glow { text-decoration: none; display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; padding: 18px 38px; font-size: 17px; font-weight: 600; border-radius: 16px; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.45); transition: 0.2s; }
         .btn-glow:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 40px rgba(139, 92, 246, 0.7); }
 
-        /* Нижняя секция */
-        .content-section { position: relative; z-index: 10; max-width: 960px; margin: 0 auto; padding: 60px 20px 100px; display: flex; flex-direction: column; gap: 36px; align-items: center; }
-        .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
-        @media (max-width: 768px) { .grid-two { grid-template-columns: 1fr; } }
+        /* Секция блоков строго друг под другом */
+        .content-section { position: relative; z-index: 10; max-width: 580px; margin: 0 auto; padding: 40px 20px 100px; display: flex; flex-direction: column; gap: 32px; align-items: center; }
 
-        .glass-card { background: rgba(18, 24, 34, 0.82); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px; padding: 32px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85); scroll-margin-top: 90px; }
-        .full-card { max-width: 640px; }
+        .glass-card { background: rgba(18, 24, 34, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px; padding: 32px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85); scroll-margin-top: 90px; }
 
         h2 { font-size: 22px; margin-bottom: 6px; font-weight: 700; }
         .sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
         .input-group { margin-bottom: 14px; text-align: left; }
         label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; font-weight: 500; }
-        input, textarea { width: 100%; background: rgba(10, 15, 22, 0.88); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
+        input, textarea { width: 100%; background: rgba(10, 15, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
         input:focus, textarea:focus { outline: none; border-color: #8b5cf6; }
         textarea { resize: vertical; min-height: 75px; }
 
         .btn-submit { width: 100%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; transition: 0.2s; }
         .btn-submit:hover { opacity: 0.92; }
         .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); }
 
         /* Статус */
         .status-box { padding: 22px; border-radius: 16px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); text-align: center; }
@@ -90,11 +88,11 @@
 <header>
     <a href="#top" class="logo">Shell Squad</a>
     <div class="nav-links" id="navGuest">
-        <a href="#auth-section" class="nav-btn">Войти</a>
-        <a href="#auth-section" class="nav-btn accent">Регистрация</a>
+        <a href="#login-section" class="nav-btn">Войти</a>
+        <a href="#register-section" class="nav-btn accent">Регистрация</a>
     </div>
     <div class="nav-links hidden" id="navUser">
-        <a href="#apply-section" class="nav-btn" id="navUserBadge"><span class="sync-dot"></span> <span id="navUserNick">Аккаунт</span></a>
+        <a href="#profile-section" class="nav-btn"><span class="sync-dot"></span> <span id="navUserNick">Профиль</span></a>
         <button type="button" class="nav-btn" onclick="logoutUser()">Выйти</button>
     </div>
 </header>
@@ -104,23 +102,25 @@
     <div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
     <h1 class="main-title">Shell Squad</h1>
     <p class="hero-desc">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
-    <a href="#auth-section" class="btn-glow" id="heroBtn">Подать заявку на 3 лвл →</a>
+    <a href="#register-section" class="btn-glow" id="heroBtn">Подать заявку на 3 лвл →</a>
 </section>
 
 <!-- НИЖНЯЯ ЧАСТЬ САЙТА -->
 <main class="content-section">
 
-    <!-- БЛОК 1: РЕГИСТРАЦИЯ И ВХОД -->
-    <div class="grid-two" id="auth-section">
-        <div class="glass-card">
-            <h2>1. Регистрация</h2>
-            <p class="sub">Создает облачный аккаунт с автоматической синхронизацией.</p>
-            <form onsubmit="handleRegister(event)">
-                <div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" placeholder="Например: Shadow" required></div>
-                <div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" placeholder="••••••••" required></div>
-                <button type="submit" class="btn-submit" id="reg-btn">Создать аккаунт и синхронизировать</button>
-            </form>
-        </div>
+    <!-- 1. РЕГИСТРАЦИЯ -->
+    <div class="glass-card" id="register-section">
+        <h2>1. Регистрация</h2>
+        <p class="sub">Создайте аккаунт, чтобы настроить профиль и подать заявку.</p>
+        <form onsubmit="handleRegister(event)">
+            <div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" placeholder="Например: Krust" required></div>
+            <div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" placeholder="••••••••" required></div>
+            <button type="submit" class="btn-submit" id="reg-btn">Создать аккаунт</button>
+        </form>
+    </div>
 
-        <div class="glass-card">
-            <h2>Вход в аккаунт</h2>
+    <!-- 2. ВХОД В АККАУНТ (НИЖЕ РЕГИСТРАЦИИ) -->
+    <div class="glass-card" id="login-section">
+        <h2>Вход в аккаунт</h2>
+        <p class="sub">Уже создали аккаунт? Войдите здесь, чтобы открыть профиль и заявку.</p>
+        <form onsubmit="handleLogin(event)">
