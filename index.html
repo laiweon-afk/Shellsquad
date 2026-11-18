@@ -6,142 +6,79 @@
 <title>Shell Squad — Открытый набор на 3 ЛВЛ</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
-body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 20px 60px;overflow-x:hidden;position:relative}
-.bg{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.4),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
+body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;overflow:hidden;position:relative}
+.bg{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.35),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
 .sky{position:fixed;top:0;left:0;width:100%;height:60%;pointer-events:none;z-index:1}
 .b-box{position:absolute;left:-10%;animation:fly linear infinite;opacity:.65}
 .bird{width:24px;height:12px;fill:none;stroke:rgba(203,213,225,.75);stroke-width:2;stroke-linecap:round;animation:flap .8s ease-in-out infinite alternate}
 @keyframes fly{0%{transform:translate(0,0) scale(.8)}50%{transform:translate(60vw,-25px) scale(1)}100%{transform:translate(120vw,10px) scale(.7)}}
 @keyframes flap{0%{transform:scaleY(1)}100%{transform:scaleY(-.6)}}
-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,14,20,.85),transparent);backdrop-filter:blur(6px)}
-.logo{font-size:20px;font-weight:800;color:#fff;cursor:pointer}
+header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,14,20,.85),transparent)}
+.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
 .nav{display:flex;gap:10px;align-items:center}
-.btn-n{background:rgba(18,24,34,.85);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:9px 18px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-n{text-decoration:none;background:rgba(18,24,34,.82);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:9px 18px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .acc{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);border:none}
 .dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
 .hero{position:relative;z-index:10;text-align:center;max-width:580px}
 .tag{display:inline-block;padding:6px 16px;background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:16px}
 h1{font-size:56px;font-weight:800;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,#cbd5e1 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p.desc{color:#e2e8f0;font-size:16px;line-height:1.6;margin-bottom:34px}
-.glow{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;padding:18px 38px;font-size:17px;font-weight:600;border-radius:16px;box-shadow:0 10px 30px rgba(139,92,246,.45);cursor:pointer}
-.card{position:relative;z-index:10;background:rgba(18,24,34,.9);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:32px;width:100%;max-width:500px;box-shadow:0 25px 50px -12px rgba(0,0,0,.85)}
-.wide{max-width:720px}
-h2{font-size:22px;margin-bottom:6px}
-.sub{color:#94a3b8;font-size:13px;margin-bottom:18px}
-.grp{margin-bottom:14px;text-align:left}
-label{display:block;font-size:13px;color:#cbd5e1;margin-bottom:6px}
-input,textarea{width:100%;background:rgba(10,15,22,.9);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:14px}
-input:disabled{opacity:.55;cursor:not-allowed}
-textarea{resize:vertical;min-height:70px}
-.btn{width:100%;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
-.link{margin-top:14px;text-align:center;font-size:13px;color:#94a3b8}
-.link span{color:#a78bfa;cursor:pointer;text-decoration:underline}
-.st-box{padding:18px;border-radius:16px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.12);text-align:center;margin-bottom:18px}
-.badge{display:inline-block;padding:6px 14px;border-radius:10px;font-weight:700;font-size:13px;margin-bottom:8px}
-.st-wait{background:rgba(234,179,8,.15);color:#facc15}.st-review{background:rgba(59,130,246,.15);color:#60a5fa}.st-accept{background:rgba(16,185,129,.15);color:#34d399}.st-reject{background:rgba(239,68,68,.15);color:#f87171}
-.item{background:rgba(10,15,22,.92);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;margin-bottom:12px;text-align:left}
-.item p{font-size:13px;color:#cbd5e1;margin-bottom:6px}
-.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.abtn{border:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#fff}
+p{color:#e2e8f0;font-size:16px;line-height:1.6;margin-bottom:34px}
+.glow{text-decoration:none;display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;padding:18px 38px;font-size:17px;font-weight:600;border-radius:16px;box-shadow:0 10px 30px rgba(139,92,246,.45)}
 .hidden{display:none!important}
 footer{position:fixed;bottom:12px;left:0;right:0;z-index:15;text-align:center;color:#64748b;font-size:12px}
-footer span{color:#94a3b8;cursor:pointer}
+footer a{color:#94a3b8;text-decoration:none}
 </style>
 </head>
 <body>
 <div class="bg"></div>
 <div class="sky" id="sky"></div>
-
 <header>
-  <div class="logo" onclick="openBox('v-home')">Shell Squad</div>
+  <a href="index.html" class="logo">Shell Squad</a>
   <div class="nav" id="gNav">
-    <button type="button" class="btn-n" onclick="openBox('v-log')">Войти</button>
-    <button type="button" class="btn-n acc" onclick="openBox('v-reg')">Регистрация</button>
+    <a href="app.html?mode=login" class="btn-n">Войти</a>
+    <a href="app.html?mode=register" class="btn-n acc">Регистрация</a>
   </div>
   <div class="nav hidden" id="uNav">
-    <button type="button" class="btn-n" onclick="openBox('v-prof')"><span class="dot"></span> <span id="uName">Профиль</span></button>
-    <button type="button" class="btn-n" onclick="logout()">Выйти</button>
+    <a href="app.html?mode=profile" class="btn-n"><span class="dot"></span> <span id="uName">Профиль</span></a>
+    <button type="button" class="btn-n" onclick="localStorage.clear();location.reload()">Выйти</button>
   </div>
 </header>
-
-<div class="hero" id="v-home">
+<div class="hero">
   <div class="tag">SHELL SQUAD • ОТКРЫТЫЙ НАБОР</div>
   <h1>Shell Squad</h1>
-  <p class="desc" id="hSub">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
-  <button type="button" class="glow" id="hBtn" onclick="goMain()">Подать заявку на 3 лвл →</button>
+  <p id="hSub">Атмосфера, опыт и комьюнити. Пройди отбор и получи доступ к приватному 3 уровню.</p>
+  <a href="app.html" class="glow" id="hBtn">Подать заявку на 3 лвл →</a>
 </div>
-
-<div class="card hidden" id="v-reg">
-  <h2>Регистрация аккаунта</h2>
-  <p class="sub">Логин закрепляется навсегда и синхронизируется с облаком.</p>
-  <form onsubmit="reg(event)">
-    <div class="grp"><label>Придумайте логин</label><input type="text" id="r-l" required></div>
-    <div class="grp"><label>Придумайте пароль</label><input type="password" id="r-p" required></div>
-    <button type="submit" class="btn" id="r-btn">Зарегистрироваться</button>
-  </form>
-  <div class="link">Уже есть аккаунт? <span onclick="openBox('v-log')">Войти</span> • <span onclick="openBox('v-home')">На главную</span></div>
-</div>
-
-<div class="card hidden" id="v-log">
-  <h2>Вход в аккаунт</h2>
-  <p class="sub">Войдите, чтобы открыть профиль и статус заявки.</p>
-  <form onsubmit="log(event)">
-    <div class="grp"><label>Ваш логин</label><input type="text" id="l-l" required></div>
-    <div class="grp"><label>Ваш пароль</label><input type="password" id="l-p" required></div>
-    <button type="submit" class="btn" id="l-btn">Войти</button>
-  </form>
-  <div class="link">Нет аккаунта? <span onclick="openBox('v-reg')">Регистрация</span> • <span onclick="openBox('v-home')">На главную</span></div>
-</div>
-
-<div class="card hidden" id="v-prof">
-  <h2>Ваш профиль</h2>
-  <p class="sub">Статус заявки и настройки аккаунта.</p>
-  <div class="st-box">
-    <div id="p-badge" class="badge st-wait">📝 Заявка еще не подана</div>
-    <p id="p-st-txt" style="font-size:14px;line-height:1.4">Вы можете подать анкету на 3 лвл.</p>
-    <p id="p-st-rev" style="margin-top:6px;font-size:12px;color:#94a3b8"></p>
-  </div>
-  <form onsubmit="saveP(event)">
-    <div class="grp"><label>Ваш логин (нельзя изменить)</label><input type="text" id="p-log-inp" disabled></div>
-    <div class="grp"><label>Отображаемый никнейм</label><input type="text" id="p-nick" required></div>
-    <div class="grp"><label>Ваш основной Discord</label><input type="text" id="p-ds"></div>
-    <button type="submit" class="btn">Сохранить настройки</button>
-  </form>
-  <div class="link"><span onclick="goMain()">Перейти к заявке →</span> • <span onclick="openBox('v-home')">На главную</span></div>
-</div>
-
-<div class="card hidden" id="v-app">
-  <h2>Заявка на 3 лвл</h2>
-  <p class="sub">Аккаунт <strong id="a-user" style="color:#34d399"></strong> активен.</p>
-  <form onsubmit="sendApp(event)">
-    <div class="grp"><label>Ваше имя</label><input type="text" id="f-name" required></div>
-    <div class="grp"><label>Ваш возраст</label><input type="number" id="f-age" min="10" max="99" required></div>
-    <div class="grp"><label>Почему именно вы?</label><textarea id="f-why" required></textarea></div>
-    <div class="grp"><label>Сколько в софтах?</label><input type="text" id="f-exp" required></div>
-    <div class="grp"><label>С каким читом играете?</label><input type="text" id="f-soft" required></div>
-    <div class="grp"><label>Ваш Discord</label><input type="text" id="f-ds" required></div>
-    <button type="submit" class="btn" id="s-btn">Отправить заявку</button>
-  </form>
-  <div class="link"><span onclick="openBox('v-home')">← На главную</span></div>
-</div>
-
-<div class="card wide hidden" id="v-adm">
-  <h2>Панель проверяющего</h2>
-  <form onsubmit="admLog(event)" id="adm-f">
-    <div class="grp"><label>Ваш ник проверяющего</label><input type="text" id="a-nick" required></div>
-    <div class="grp"><label>Пароль админ-панели</label><input type="password" id="a-pass" required></div>
-    <button type="submit" class="btn">Войти в панель</button>
-  </form>
-  <div id="adm-box" class="hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <p class="sub" style="margin:0">Админ: <strong id="a-cur" style="color:#c4b5fd"></strong></p>
-      <button type="button" class="abtn" style="background:#334155" onclick="loadAdm()">🔄 Обновить</button>
-    </div>
-    <div id="a-list">Загрузка...</div>
-  </div>
-  <div class="link"><span onclick="openBox('v-home')">← На главную</span></div>
-</div>
-
-<footer>Shell Squad © 2026 • <span onclick="openBox('v-adm')">Панель администрации</span></footer>
-
+<footer>Shell Squad © 2026 • <a href="app.html?mode=admin">Панель администрации</a></footer>
 <script>
+const DB='https://'+'://firebaseio.com';
+const sky=document.getElementById('sky');
+for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}
+
+async function syncHome(){
+  const k=localStorage.getItem('s_key');
+  if(k){
+    try{
+      const r=await fetch(DB+'/users/'+k+'.json');
+      if(r.ok){
+        const u=await r.json();
+        if(u){
+          localStorage.setItem('s_nick',u.displayNick||u.login);
+          if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
+        }else{localStorage.clear()}
+      }
+    }catch(e){}
+  }
+  const n=localStorage.getItem('s_nick'),app=localStorage.getItem('s_app');
+  if(n){
+    document.getElementById('gNav').classList.add('hidden');
+    document.getElementById('uNav').classList.remove('hidden');
+    document.getElementById('uName').textContent=n;
+    document.getElementById('hSub').innerHTML='Добро пожаловать, <strong style="color:#fff">'+n+'</strong>! Аккаунт синхронизирован.';
+    document.getElementById('hBtn').textContent=app?'Статус моей заявки →':'Подать заявку на 3 лвл →';
+  }
+}
+window.addEventListener('DOMContentLoaded',syncHome);
+</script>
+</body>
+</html>
