@@ -1,6 +1,5 @@
-const BLOB_URL = ['https:', '', 'jsonblob.com', 'api', 'jsonBlob', '01a1efe3-e112-741f-9111-24955f15a4a3'].join('/');
-const HOOK = 'https://discord.com/api/webhooks/1572641039817380003/RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6';
-
+const DB_URL = ['https:', '', 'api.npoint.io', 'c6599586b67339eb9972'].join('/');
+const HOOK = ['https:', '', 'discord.com', 'api', 'webhooks', '1572641039817380003', 'RwLWlV8XtoHgsT0fKTR-lXcLOapczZ7DhpUCic-izRV8c0YnDING166mJvn6RITba-I6'].join('/');
 const PASS = 'shell2026';
 let tmr = null;
 
@@ -12,18 +11,19 @@ const sky=document.getElementById('sky');
 if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
 
 async function getDB(){
-  const res = await fetch(BLOB_URL);
+  const res = await fetch(DB_URL);
   if(!res.ok) throw new Error('Ошибка облака HTTP ' + res.status);
   const d = await res.json();
+  if(!d || typeof d !== 'object') return {users:{}, apps:{}};
   if(!d.users || Array.isArray(d.users)) d.users = {};
   if(!d.apps || Array.isArray(d.apps)) d.apps = {};
   return d;
 }
 
 async function saveDB(data){
-  const res = await fetch(BLOB_URL, {
-    method: 'PUT',
-    headers: {'Content-Type':'application/json','Accept':'application/json'},
+  const res = await fetch(DB_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
     body: JSON.stringify(data)
   });
   if(!res.ok) throw new Error('Ошибка сохранения HTTP ' + res.status);
@@ -185,5 +185,3 @@ async function loadAdm(){
 }
 
 async function setA(id,status){
-  const db=await getDB();
-}
