@@ -123,22 +123,19 @@ textarea{resize:vertical;min-height:70px}
     <div id="a-list">Загрузка...</div>
   </div>
 </div>
-<script src="app.js"></script>
-</body>
-</html>
-const DB = 'https://' + '://firebaseio.com';
-const HOOK = 'https://' + '://discord.com';
-const PASS = 'shell2026';
-let tmr = null;
+<script>
+const DB='https://'+'://firebaseio.com';
+const HOOK='https://'+'://discord.com';
+const PASS='shell2026';
+let tmr=null;
 
 function keyOf(s){return Array.from(s.trim().toLowerCase()).map(c=>c.charCodeAt(0).toString(16)).join('')}
-function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));const el=document.getElementById(id);if(el)el.classList.remove('hidden')}
+function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
 function backP(){show(localStorage.getItem('s_app')?'b-st':'b-app')}
 
-const sky=document.getElementById('sky');
-if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
-
-async function startAll(){
+async function init(){
+  const m=new URLSearchParams(location.search).get('mode');
+  if(m==='admin'){show('b-adm');return}
   const k=localStorage.getItem('s_key');
   if(k){
     try{
@@ -154,21 +151,6 @@ async function startAll(){
       }
     }catch(e){}
   }
-
-  if(document.getElementById('hBtn')){
-    const n=localStorage.getItem('s_nick'),app=localStorage.getItem('s_app');
-    if(n){
-      document.getElementById('gNav').classList.add('hidden');
-      document.getElementById('uNav').classList.remove('hidden');
-      document.getElementById('uName').textContent=n;
-      document.getElementById('hSub').innerHTML='Добро пожаловать, <strong style="color:#fff">'+n+'</strong>! Аккаунт синхронизирован.';
-      document.getElementById('hBtn').textContent=app?'Статус моей заявки →':'Подать заявку на 3 лвл →';
-    }
-    return;
-  }
-
-  const m=new URLSearchParams(location.search).get('mode');
-  if(m==='admin'){show('b-adm');return}
   const n=localStorage.getItem('s_nick');
   if(n){
     ui();
@@ -193,7 +175,7 @@ function ui(){
   if(d&&!document.getElementById('f-ds').value)document.getElementById('f-ds').value=d;
 }
 
-window.addEventListener('DOMContentLoaded',startAll);
+window.addEventListener('DOMContentLoaded',init);
 function logout(){localStorage.clear();if(tmr)clearInterval(tmr);location.href='index.html'}
 
 async function reg(e){
@@ -285,3 +267,9 @@ async function loadAdm(){
 }
 
 async function setA(id,status){
+  await fetch(DB+'/applications/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,reviewer:localStorage.getItem('s_adm')||'Админ'})});
+  loadAdm();
+}
+</script>
+</body>
+</html>
