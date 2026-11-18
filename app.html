@@ -135,7 +135,6 @@ function keyOf(s){return Array.from(s.trim().toLowerCase()).map(c=>c.charCodeAt(
 function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));const el=document.getElementById(id);if(el)el.classList.remove('hidden')}
 function backP(){show(localStorage.getItem('s_app')?'b-st':'b-app')}
 
-// Птицы для главной страницы
 const sky=document.getElementById('sky');
 if(sky){for(let i=0;i<6;i++){const b=document.createElement('div');b.className='b-box';b.style.top=(12+Math.random()*28)+'%';b.style.animationDuration=(16+Math.random()*14)+'s';b.style.animationDelay=(-Math.random()*20)+'s';b.innerHTML='<svg class="bird" viewBox="0 0 24 12"><path d="M2 8 Q7 2 12 8 Q17 2 22 8"/></svg>';sky.appendChild(b)}}
 
@@ -156,7 +155,6 @@ async function startAll(){
     }catch(e){}
   }
 
-  // Если открыта главная страница (index.html)
   if(document.getElementById('hBtn')){
     const n=localStorage.getItem('s_nick'),app=localStorage.getItem('s_app');
     if(n){
@@ -169,7 +167,6 @@ async function startAll(){
     return;
   }
 
-  // Если открыт кабинет (app.html)
   const m=new URLSearchParams(location.search).get('mode');
   if(m==='admin'){show('b-adm');return}
   const n=localStorage.getItem('s_nick');
