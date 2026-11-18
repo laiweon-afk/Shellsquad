@@ -74,13 +74,16 @@ async function reg(e){
   b.disabled=true;b.textContent='Проверка...';
   try{
     const c=await fetch(DB+'/users/'+k+'.json');
-    if(!c.ok)throw new Error();
+    if(!c.ok)throw new Error('HTTP '+c.status+' при чтении');
     if(await c.json()){alert('Этот логин уже занят! Войдите в аккаунт.');b.disabled=false;b.textContent='Зарегистрироваться и продолжить';show('b-log');return}
     const w=await fetch(DB+'/users/'+k+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:l,displayNick:l,discord:'',pass:p,appId:''})});
-    if(!w.ok)throw new Error();
+    if(!w.ok)throw new Error('HTTP '+w.status+' при записи');
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',l);localStorage.setItem('s_login',l);localStorage.removeItem('s_app');
     location.href='index.html';
-  }catch(err){alert('Ошибка связи с базой Firebase!');b.disabled=false;b.textContent='Зарегистрироваться и продолжить'}
+  }catch(err){
+    alert('Причина ошибки: '+err.message);
+    b.disabled=false;b.textContent='Зарегистрироваться и продолжить';
+  }
 }
 
 async function log(e){
@@ -89,13 +92,16 @@ async function log(e){
   b.disabled=true;b.textContent='Вход...';
   try{
     const r=await fetch(DB+'/users/'+k+'.json');
-    if(!r.ok)throw new Error();
+    if(!r.ok)throw new Error('HTTP '+r.status);
     const u=await r.json();
     if(!u||u.pass!==p){alert('Неверный логин или пароль!');b.disabled=false;b.textContent='Войти';return}
     localStorage.setItem('s_key',k);localStorage.setItem('s_nick',u.displayNick||u.login);localStorage.setItem('s_login',u.login);localStorage.setItem('s_ds',u.discord||'');
     if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
     location.href='index.html';
-  }catch(err){alert('Ошибка сети');b.disabled=false;b.textContent='Войти'}
+  }catch(err){
+    alert('Причина ошибки: '+err.message);
+    b.disabled=false;b.textContent='Войти';
+  }
 }
 
 async function saveP(e){
@@ -112,12 +118,16 @@ async function sendApp(e){
   const app={login:u+' ('+l+')',userKey:k,name:document.getElementById('f-name').value.trim(),age:document.getElementById('f-age').value.trim(),why:document.getElementById('f-why').value.trim(),exp:document.getElementById('f-exp').value.trim(),soft:document.getElementById('f-soft').value.trim(),discord:document.getElementById('f-ds').value.trim(),status:'wait',reviewer:''};
   try{
     const r=await fetch(DB+'/applications.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(app)});
+    if(!r.ok)throw new Error('HTTP '+r.status);
     const res=await r.json(),id=res.name;
     localStorage.setItem('s_app',id);
     await fetch(DB+'/users/'+k+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({appId:id})});
     fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'Shell Squad',embeds:[{title:'🌿 Новая заявка на 3 ЛВЛ!',description:'[Открыть панель проверки]('+location.origin+location.pathname+'?mode=admin)',color:9055202,fields:[{name:'Игрок',value:app.login,inline:true},{name:'Имя/Возраст',value:app.name+' ('+app.age+')',inline:true},{name:'Discord',value:app.discord,inline:true},{name:'Опыт',value:app.exp,inline:true},{name:'Чит',value:app.soft,inline:true},{name:'Почему он',value:app.why}]}]})}).catch(()=>{});
     location.href='index.html';
-  }catch(err){alert('Ошибка отправки');b.disabled=false;b.textContent='Отправить заявку'}
+  }catch(err){
+    alert('Причина ошибки: '+err.message);
+    b.disabled=false;b.textContent='Отправить заявку';
+  }
 }
 
 function watch(id){once(id);if(tmr)clearInterval(tmr);tmr=setInterval(()=>once(id),4000)}
@@ -152,8 +162,3 @@ async function loadAdm(){
     if(a.status==='review')st='👀 На рассмотрении ('+a.reviewer+')';
     if(a.status==='accept')st='✅ Взят ('+a.reviewer+')';
     if(a.status==='reject')st='❌ Отклонен ('+a.reviewer+')';
-    l.innerHTML+='<div class="item"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><strong>'+a.login+' ('+a.name+', '+a.age+')</strong><span style="color:#c4b5fd">'+st+'</span></div><p>Discord: '+a.discord+' | Опыт: '+a.exp+' | Чит: '+a.soft+'</p><p>'+a.why+'</p><div class="acts"><button class="abtn" style="background:#3b82f6" onclick="setA(\''+id+'\',\'review\')">👀 Взять на рассмотрение</button><button class="abtn" style="background:#10b981" onclick="setA(\''+id+'\',\'accept\')">✅ Взять</button><button class="abtn" style="background:#ef4444" onclick="setA(\''+id+'\',\'reject\')">❌ Отклонить</button></div></div>';
-  }
-}
-
-async function setA(id,status){
