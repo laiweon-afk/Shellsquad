@@ -3,159 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shell Squad — Личный кабинет и Заявка</title>
+<title>Shell Squad — Кабинет</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-body { min-height: 100vh; color: #f1f5f9; background: #0d131a; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 20px 60px; position: relative; }
-.bg-layer { position: fixed; inset: -20px; background-image: linear-gradient(to bottom, rgba(13,19,26,0.45), rgba(10,14,20,0.92)), url('bg.jpg'), url('https://unsplash.com'); background-size: cover; background-position: center; z-index: 0; pointer-events: none; }
-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 32px; display: flex; justify-content: space-between; align-items: center; background: rgba(10,14,20,0.8); backdrop-filter: blur(8px); }
-.logo { font-size: 20px; font-weight: 800; color: #fff; text-decoration: none; }
-.nav-links { display: flex; gap: 10px; align-items: center; }
-.nav-btn { text-decoration: none; background: rgba(18,24,34,0.9); border: 1px solid rgba(255,255,255,0.18); color: #f1f5f9; padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
-.sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 8px #34d399; display: inline-block; }
-.glass-card { position: relative; z-index: 10; background: rgba(18,24,34,0.88); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px; padding: 34px; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85); margin-bottom: 20px; }
-.admin-wide { max-width: 720px; }
-h2 { font-size: 22px; margin-bottom: 6px; }
-.sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
-.input-group { margin-bottom: 14px; text-align: left; }
-label { display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
-input, textarea { width: 100%; background: rgba(10,15,22,0.9); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 14px; }
-textarea { resize: vertical; min-height: 75px; }
-.btn-submit { width: 100%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 6px; }
-.switch-link { margin-top: 14px; text-align: center; font-size: 13px; color: #94a3b8; }
-.switch-link span { color: #a78bfa; cursor: pointer; text-decoration: underline; }
-.status-box { padding: 22px; border-radius: 16px; background: rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.12); text-align: center; }
-.status-badge { display: inline-block; padding: 6px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
-.st-wait { background: rgba(234,179,8,0.15); color: #facc15; }
-.st-review { background: rgba(59,130,246,0.15); color: #60a5fa; }
-.st-accept { background: rgba(16,185,129,0.15); color: #34d399; }
-.st-reject { background: rgba(239,68,68,0.15); color: #f87171; }
-.app-item { background: rgba(10,15,22,0.92); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 18px; margin-bottom: 14px; text-align: left; }
-.app-item p { font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
-.app-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-.act-btn { border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: #fff; }
-.btn-take { background: #3b82f6; } .btn-yes { background: #10b981; } .btn-no { background: #ef4444; }
-.hidden { display: none !important; }
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Roboto,sans-serif}
+body{min-height:100vh;color:#f1f5f9;background:#0d131a;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 20px 60px;position:relative}
+.bg{position:fixed;inset:-20px;background:linear-gradient(to bottom,rgba(13,19,26,.45),rgba(10,14,20,.92)),url('bg.jpg'),url('https://unsplash.com');background-size:cover;background-position:center;z-index:0;pointer-events:none}
+header{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,14,20,.85);backdrop-filter:blur(8px)}
+.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+.nav{display:flex;gap:10px;align-items:center}
+.btn-s{background:rgba(18,24,34,.9);border:1px solid rgba(255,255,255,.18);color:#f1f5f9;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
+.card{position:relative;z-index:10;background:rgba(18,24,34,.88);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:32px;width:100%;max-width:500px;box-shadow:0 25px 50px -12px rgba(0,0,0,.85)}
+.wide{max-width:720px}
+h2{font-size:22px;margin-bottom:6px}
+.sub{color:#94a3b8;font-size:13px;margin-bottom:18px}
+.grp{margin-bottom:14px}
+label{display:block;font-size:13px;color:#cbd5e1;margin-bottom:6px}
+input,textarea{width:100%;background:rgba(10,15,22,.9);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;color:#fff;font-size:14px}
+textarea{resize:vertical;min-height:70px}
+.btn{width:100%;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+.link{margin-top:14px;text-align:center;font-size:13px;color:#94a3b8}
+.link span{color:#a78bfa;cursor:pointer;text-decoration:underline}
+.st-box{padding:22px;border-radius:16px;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.12);text-align:center}
+.badge{display:inline-block;padding:6px 14px;border-radius:10px;font-weight:700;font-size:14px;margin-bottom:10px}
+.st-wait{background:rgba(234,179,8,.15);color:#facc15}.st-review{background:rgba(59,130,246,.15);color:#60a5fa}.st-accept{background:rgba(16,185,129,.15);color:#34d399}.st-reject{background:rgba(239,68,68,.15);color:#f87171}
+.item{background:rgba(10,15,22,.92);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;margin-bottom:12px}
+.item p{font-size:13px;color:#cbd5e1;margin-bottom:6px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.abtn{border:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#fff}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="bg-layer"></div>
-
+<div class="bg"></div>
 <header>
   <a href="index.html" class="logo">← Shell Squad</a>
-  <div class="nav-links hidden" id="navUser">
-    <button type="button" class="nav-btn" onclick="showBox('box-profile')"><span class="sync-dot"></span> <span id="navUserNick">Профиль</span></button>
-    <button type="button" class="nav-btn" onclick="logoutUser()">Выйти</button>
+  <div class="nav hidden" id="navU">
+    <button type="button" class="btn-s" onclick="show('b-prof')"><span class="dot"></span> <span id="uNick">Профиль</span></button>
+    <button type="button" class="btn-s" onclick="logout()">Выйти</button>
   </div>
 </header>
 
-<div class="glass-card" id="box-register">
-  <h2>Регистрация аккаунта</h2>
-  <p class="sub">Создайте профиль — он сразу синхронизируется с облаком.</p>
-  <form onsubmit="handleRegister(event)">
-    <div class="input-group"><label>Придумайте логин (Никнейм)</label><input type="text" id="reg-login" required></div>
-    <div class="input-group"><label>Придумайте пароль</label><input type="password" id="reg-pass" required></div>
-    <button type="submit" class="btn-submit" id="reg-btn">Зарегистрироваться и продолжить</button>
+<div class="card" id="b-reg">
+  <h2>Регистрация</h2>
+  <p class="sub">Создайте аккаунт — он сразу сохранится и синхронизируется.</p>
+  <form onsubmit="reg(event)">
+    <div class="grp"><label>Логин (Никнейм)</label><input type="text" id="r-l" required></div>
+    <div class="grp"><label>Пароль</label><input type="password" id="r-p" required></div>
+    <button type="submit" class="btn" id="r-btn">Создать аккаунт</button>
   </form>
-  <div class="switch-link">Уже есть аккаунт? <span onclick="showBox('box-login')">Войти</span></div>
+  <div class="link">Уже есть аккаунт? <span onclick="show('b-log')">Войти</span></div>
 </div>
 
-<div class="glass-card hidden" id="box-login">
+<div class="card hidden" id="b-log">
   <h2>Вход в аккаунт</h2>
-  <p class="sub">Войдите, чтобы синхронизировать профиль и статус заявки.</p>
-  <form onsubmit="handleLogin(event)">
-    <div class="input-group"><label>Ваш логин (Никнейм)</label><input type="text" id="log-login" required></div>
-    <div class="input-group"><label>Ваш пароль</label><input type="password" id="log-pass" required></div>
-    <button type="submit" class="btn-submit" id="log-btn">Войти</button>
+  <p class="sub">Войдите, чтобы открыть профиль и статус заявки.</p>
+  <form onsubmit="log(event)">
+    <div class="grp"><label>Ваш логин</label><input type="text" id="l-l" required></div>
+    <div class="grp"><label>Ваш пароль</label><input type="password" id="l-p" required></div>
+    <button type="submit" class="btn" id="l-btn">Войти</button>
   </form>
-  <div class="switch-link">Нет аккаунта? <span onclick="showBox('box-register')">Зарегистрироваться</span></div>
+  <div class="link">Нет аккаунта? <span onclick="show('b-reg')">Регистрация</span></div>
 </div>
 
-<div class="glass-card hidden" id="box-profile">
+<div class="card hidden" id="b-prof">
   <h2>Настройка профиля</h2>
-  <p class="sub">Логин: <strong id="prof-login-label" style="color:#fff"></strong></p>
-  <form onsubmit="saveProfile(event)">
-    <div class="input-group"><label>Отображаемый никнейм</label><input type="text" id="prof-nick" required></div>
-    <div class="input-group"><label>Ваш основной Discord</label><input type="text" id="prof-discord"></div>
-    <button type="submit" class="btn-submit">Сохранить профиль</button>
+  <p class="sub">Логин: <strong id="p-log" style="color:#fff"></strong></p>
+  <form onsubmit="saveP(event)">
+    <div class="grp"><label>Отображаемый никнейм</label><input type="text" id="p-nick" required></div>
+    <div class="grp"><label>Ваш основной Discord</label><input type="text" id="p-ds"></div>
+    <button type="submit" class="btn">Сохранить</button>
   </form>
-  <div class="switch-link"><span onclick="backFromProfile()">← Вернуться к заявке</span></div>
+  <div class="link"><span onclick="backP()">← Вернуться к заявке</span></div>
 </div>
 
-<div class="glass-card hidden" id="box-apply">
+<div class="card hidden" id="b-app">
   <h2>Заявка на 3 лвл</h2>
-  <p class="sub">Аккаунт <strong id="apply-user" style="color:#34d399"></strong> синхронизирован. Заполните анкету.</p>
-  <form onsubmit="handleApplication(event)">
-    <div class="input-group"><label>Ваше имя</label><input type="text" id="f-name" required></div>
-    <div class="input-group"><label>Ваш возраст</label><input type="number" id="f-age" min="10" max="99" required></div>
-    <div class="input-group"><label>Почему именно вы?</label><textarea id="f-why" required></textarea></div>
-    <div class="input-group"><label>Сколько в софтах?</label><input type="text" id="f-exp" required></div>
-    <div class="input-group"><label>С каким читом играете?</label><input type="text" id="f-soft" required></div>
-    <div class="input-group"><label>Ваш Discord</label><input type="text" id="f-discord" required></div>
-    <button type="submit" class="btn-submit" id="send-btn">Отправить заявку на 3 лвл</button>
+  <p class="sub">Аккаунт <strong id="a-user" style="color:#34d399"></strong> активен. Заполните анкету.</p>
+  <form onsubmit="sendApp(event)">
+    <div class="grp"><label>Ваше имя</label><input type="text" id="f-name" required></div>
+    <div class="grp"><label>Ваш возраст</label><input type="number" id="f-age" min="10" max="99" required></div>
+    <div class="grp"><label>Почему именно вы?</label><textarea id="f-why" required></textarea></div>
+    <div class="grp"><label>Сколько в софтах?</label><input type="text" id="f-exp" required></div>
+    <div class="grp"><label>С каким читом играете?</label><input type="text" id="f-soft" required></div>
+    <div class="grp"><label>Ваш Discord</label><input type="text" id="f-ds" required></div>
+    <button type="submit" class="btn" id="s-btn">Отправить заявку</button>
   </form>
 </div>
 
-<div class="glass-card hidden" id="box-status">
+<div class="card hidden" id="b-st">
   <h2>Статус вашей заявки</h2>
-  <p class="sub">Игрок: <strong id="user-display" style="color:#fff"></strong></p>
-  <div class="status-box">
-    <div id="status-badge" class="status-badge st-wait">⏳ Ожидает рассмотрения</div>
-    <p id="status-text" style="font-size:15px;line-height:1.5">Ваша анкета отправлена. Ожидайте.</p>
-    <p id="reviewer-info" style="margin-top:10px;font-size:13px;color:#94a3b8"></p>
+  <p class="sub">Игрок: <strong id="st-user" style="color:#fff"></strong></p>
+  <div class="st-box">
+    <div id="st-badge" class="badge st-wait">⏳ Ожидает рассмотрения</div>
+    <p id="st-txt" style="font-size:15px;line-height:1.5">Ваша анкета отправлена. Ожидайте.</p>
+    <p id="st-rev" style="margin-top:10px;font-size:13px;color:#94a3b8"></p>
   </div>
 </div>
 
-<div class="glass-card admin-wide hidden" id="box-admin">
+<div class="card wide hidden" id="b-adm">
   <h2>Панель проверяющего</h2>
-  <form onsubmit="loginAdmin(event)" id="admin-login-form">
-    <div class="input-group"><label>Ваш ник проверяющего</label><input type="text" id="adm-nick" required></div>
-    <div class="input-group"><label>Пароль админ-панели</label><input type="password" id="adm-pass" required></div>
-    <button type="submit" class="btn-submit">Войти в панель</button>
+  <form onsubmit="admLog(event)" id="adm-f">
+    <div class="grp"><label>Ваш ник проверяющего</label><input type="text" id="a-nick" required></div>
+    <div class="grp"><label>Пароль админ-панели</label><input type="password" id="a-pass" required></div>
+    <button type="submit" class="btn">Войти в панель</button>
   </form>
-  <div id="admin-list-box" class="hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <p class="sub" style="margin:0">Проверяющий: <strong id="adm-current-nick" style="color:#c4b5fd"></strong></p>
-      <button type="button" class="act-btn" style="background:#334155" onclick="loadAdminApps()">🔄 Обновить</button>
+  <div id="adm-box" class="hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <p class="sub" style="margin:0">Админ: <strong id="a-cur" style="color:#c4b5fd"></strong></p>
+      <button type="button" class="abtn" style="background:#334155" onclick="loadAdm()">🔄 Обновить</button>
     </div>
-    <div id="apps-list">Загрузка...</div>
+    <div id="a-list">Загрузка...</div>
   </div>
 </div>
 
 <script>
-const DB = 'https://firebaseio.com';
-const HOOK = 'https://discord.com';
-const PASS = 'shell2026';
-let timer = null;
+const DB='https://firebaseio.com',HOOK='https://discord.com';
+let tmr=null;
+function keyOf(s){return Array.from(s.trim().toLowerCase()).map(c=>c.charCodeAt(0).toString(16)).join('')}
+function show(id){document.querySelectorAll('.card').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function backP(){show(localStorage.getItem('s_app')?'b-st':'b-app')}
 
-function makeKey(l) {
-  return Array.from(l.trim().toLowerCase()).map(c => c.charCodeAt(0).toString(16)).join('');
+async function init(){
+  const m=new URLSearchParams(location.search).get('mode');
+  if(m==='admin'){show('b-adm');return}
+  const k=localStorage.getItem('s_key');
+  if(k){
+    try{
+      const r=await fetch(DB+'/users/'+k+'.json'),u=await r.json();
+      if(u){
+        localStorage.setItem('s_nick',u.displayNick||u.login);
+        localStorage.setItem('s_login',u.login);
+        localStorage.setItem('s_ds',u.discord||'');
+        if(u.appId)localStorage.setItem('s_app',u.appId);else localStorage.removeItem('s_app');
+        ui();
+        if(u.appId){show('b-st');watch(u.appId)}else{show('b-app')}
+        return;
+      }
+    }catch(e){
+      if(localStorage.getItem('s_nick')){ui();show(localStorage.getItem('s_app')?'b-st':'b-app');return}
+    }
+  }
+  show(m==='login'?'b-log':'b-reg');
 }
 
-function showBox(id) {
-  document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+function ui(){
+  const n=localStorage.getItem('s_nick'),l=localStorage.getItem('s_login')||n,d=localStorage.getItem('s_ds')||'';
+  document.getElementById('navU').classList.remove('hidden');
+  document.getElementById('uNick').textContent=n;
+  document.getElementById('p-log').textContent=l;
+  document.getElementById('p-nick').value=n;
+  document.getElementById('p-ds').value=d;
+  document.getElementById('a-user').textContent=n;
+  document.getElementById('st-user').textContent=n;
+  if(d&&!document.getElementById('f-ds').value)document.getElementById('f-ds').value=d;
 }
 
-function backFromProfile() {
-  const appId = localStorage.getItem('shell_app_id');
-  showBox(appId ? 'box-status' : 'box-apply');
-}
+window.addEventListener('DOMContentLoaded',init);
 
-async function initPage() {
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get('mode');
-  if (mode === 'admin') { showBox('box-admin'); return; }
+function logout(){localStorage.clear();if(tmr)clearInterval(tmr);document.getElementById('navU').classList.add('hidden');show('b-log')}
 
-  const k = localStorage.getItem('shell_user_key');
-  if (k) {
-    try {
-      const r = await fetch(DB + '/users/' + k + '.json');
-      const u = await r.json();
-      if (u) {
-        localStorage.setItem('shell_user', u.displayNick || u.login);
-        localStorage.setItem('shell_login', u.login);
-        localStorage.setItem('shell_discord', u.discord || '');
-        if (u.appId) localStorage.setItem('shell_app_id', u.appId);
-        else localStorage.removeItem('shell_app_id');
-        applyUserUI();
+async function reg(e){
+  e.preventDefault();
+  const l=document.getElementById('r-l').value.trim(),p=document.getElementById('r-p').value,k=keyOf(l),b=document.getElementById('r-btn');
+  b.disabled=true;b.textContent='Создание...';
+  try{
+    const c=await fetch(DB+'/users/'+k+'.json');
+    if(await c.json()){alert('Логин занят! Войдите.');b.disabled=false;b.textContent='Создать аккаунт';show('b-log');return}
+    await fetch(DB+'/users/'+k+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({login:l,displayNick:l,discord:'',pass:p,appId:''})});
