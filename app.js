@@ -111,7 +111,6 @@ function ui(){
 
 window.addEventListener('DOMContentLoaded', startAll);
 function logout(){localStorage.clear(); if(tmr) clearInterval(tmr); location.href = 'index.html';}
-
 async function reg(e){
   e.preventDefault();
   if(busy) return;
@@ -223,3 +222,37 @@ async function once(id){
     const bTxt = d.status === 'review' ? '👀 Взято на рассмотрение' : d.status === 'accept' ? '✅ Вы взяты!' : d.status === 'reject' ? '❌ Вы отклонены' : '⏳ Ожидает рассмотрения';
     const mTxt = d.status === 'review' ? 'Администратор проверяет вашу анкету.' : d.status === 'accept' ? 'Поздравляем! С вами свяжутся в ДС, ждите.' : d.status === 'reject' ? 'Ваша заявка отклонена. С вами свяжутся в ДС при необходимости, ждите.' : 'Ваша анкета отправлена. Ожидайте.';
     const rTxt = d.reviewer ? (d.status === 'review' ? 'Взял: <b>' + d.reviewer + '</b>' : 'Рассмотрел: <b>' + d.reviewer + '</b>') : '';
+    ['st-badge', 'p-badge'].forEach(el=>{const x = document.getElementById(el); if(x){x.className = 'badge ' + cls; x.textContent = bTxt;}});
+    ['st-txt', 'p-st-txt'].forEach(el=>{const x = document.getElementById(el); if(x) x.textContent = mTxt;});
+    ['st-rev', 'p-st-rev'].forEach(el=>{const x = document.getElementById(el); if(x) x.innerHTML = rTxt;});
+  }catch(e){}
+}
+
+function admLog(e){
+  e.preventDefault();
+  if(document.getElementById('a-pass').value !== PASS){alert('Неверный пароль!'); return;}
+  const n = document.getElementById('a-nick').value.trim();
+  localStorage.setItem('s_adm', n); document.getElementById('a-cur').textContent = n;
+  document.getElementById('adm-f').classList.add('hidden'); document.getElementById('adm-box').classList.remove('hidden'); loadAdm();
+}
+
+async function loadAdm(){
+  const l = document.getElementById('a-list'); l.innerHTML = 'Загрузка...';
+  const db = await getDB(), d = db.apps;
+  if(!d){l.innerHTML = 'Новых заявок нет.'; return;}
+  const active = Object.entries(d).filter(([id, a])=>a.status !== 'reject').reverse();
+  if(!active.length){l.innerHTML = 'Новых заявок нет.'; return;}
+  l.innerHTML = '';
+  for(const[id, a] of active){
+    let st = '⏳ Ожидает';
+    if(a.status === 'review') st = '👀 На рассмотрении (' + a.reviewer + ')';
+    if(a.status === 'accept') st = '✅ Взят (' + a.reviewer + ')';
+    l.innerHTML += '<div class="item"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><strong>' + a.login + ' (' + a.name + ', ' + a.age + ')</strong><span style="color:#c4b5fd">' + st + '</span></div><p>Discord: ' + a.discord + ' | Опыт: ' + a.exp + ' | Чит: ' + a.soft + '</p><p>' + a.why + '</p><div class="acts"><button class="abtn" style="background:#3b82f6" onclick="setA(\'' + id + '\',\'review\')">👀 Взять на рассмотрение</button><button class="abtn" style="background:#10b981" onclick="setA(\'' + id + '\',\'accept\')">✅ Взять</button><button class="abtn" style="background:#ef4444" onclick="setA(\'' + id + '\',\'reject\')">❌ Отклонить</button></div></div>';
+  }
+}
+
+async function setA(id, status){
+  const db = await getDB();
+  if(db.apps[id]){db.apps[id].status = status; db.apps[id].reviewer = localStorage.getItem('s_adm') || 'Админ'; await saveDB(db);}
+  loadAdm();
+}
